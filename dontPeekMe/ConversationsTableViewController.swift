@@ -30,12 +30,20 @@ class ConversationsTableViewController: UITableViewController {
         loggedInNameLabel!.text = loggedInName
     }
 
-    @objc func handleSignOut() {
+    func signOut(){
         UserDefaults.standard.setLoggedIn(value: false, name: "")
-        let loginController = storyboard?.instantiateViewController(withIdentifier: "Login") as! LoginViewController
+        let loginController = storyboard?.instantiateViewController(withIdentifier: "MainNavigation") as! UINavigationController
         present(loginController, animated: true, completion: {
-            //Functionality to do later?
+            // Funcitonality to do later?
         })
+    }
+    @objc func handleSignOut() {
+        let alertController = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Sign Out", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
+            self.signOut()
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
     // MARK: - Table view data source
 

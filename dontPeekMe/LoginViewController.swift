@@ -15,64 +15,51 @@ class LoginViewController: UIViewController {
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
     @IBOutlet var loginButton: UIButton!
+    @IBOutlet var forgotPasswordButton: UIButton!
+    @IBOutlet var signUpButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if isLoggedIn(){
-            perform(#selector(showConversationController), with: nil, afterDelay: 0.01)
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-
+        
         // Set the background color and login button color
-        let bgLayer = CAGradientLayer()
-        let buttonLayer = CAGradientLayer()
-        
-        
         let bgTopColor = UIColor(red: 0, green: 85/255, blue: 162/255, alpha: 0.75)
         let bgBottomColor = UIColor(red: 0, green: 85/255, blue: 162/255, alpha: 1.0)
+        setGradientBackground(topColor: bgTopColor, bottomColor: bgBottomColor)
+        
         let buttonTopColor = UIColor(red: 229/255, green: 168/255, blue: 35/255, alpha: 0.75)
         let buttonBottomColor = UIColor(red: 229/255, green: 168/255, blue: 35/255, alpha: 1.0)
+        loginButton.setGradientBackground(topColor: buttonTopColor, bottomColor: buttonBottomColor)
         
-        bgLayer.frame = view.bounds
-        bgLayer.colors = [bgTopColor.cgColor, bgBottomColor.cgColor]
-        bgLayer.startPoint = CGPoint(x:1, y:0)
-        bgLayer.endPoint = CGPoint(x:0, y:1)
+        // Set up the username/password fields
+        let lineColor = UIColor(red: 162/255, green: 162/255, blue: 162/255, alpha: 1.0)
+        usernameField.addUnderLine(lineColor: lineColor)
+        passwordField.addUnderLine(lineColor: lineColor)
         
-        buttonLayer.frame = loginButton.bounds
-        buttonLayer.colors = [buttonTopColor.cgColor, buttonBottomColor.cgColor]
-        buttonLayer.startPoint = CGPoint(x: 1, y: 0)
-        buttonLayer.endPoint = CGPoint(x: 0, y: 1)
-        buttonLayer.cornerRadius = 5
-        
-        view.layer.insertSublayer(bgLayer, at: 0)
-        loginButton.layer.cornerRadius = 5
-        loginButton.layer.insertSublayer(buttonLayer, at: 0)
-        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
+    override open var shouldAutorotate: Bool{
+        return false
+    }
+    
+    @IBAction func attemptLogin(_ sender: Any) {
+        let attributedStringColor = [NSAttributedString.Key.foregroundColor : UIColor.red]
+        if let uName = usernameField.text{
+            
+        }else{
+            
+        }
+    }
     func logIn(uName: String, pWord: String) -> Bool{
         //Attempt to log in, will update with firebase Auth later
         UserDefaults.standard.setLoggedIn(value: true, name: uName)
         return true;
     }
     
-    fileprivate func isLoggedIn() -> Bool{
-        return UserDefaults.standard.isLoggedIn()
-    }
-    
-    @objc func showConversationController() {
-        let conversationController = storyboard?.instantiateViewController(withIdentifier: "Navigation") as! UINavigationController
-        present(conversationController, animated: true, completion: {
-            //Functionality to do later?
-        })
-    }
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "showConversations"{
-            let attributedStringColor = [NSAttributedString.Key.foregroundColor : UIColor.red]
+            let attributedStringColor = [NSAttributedString.Key.foregroundColor : UIColor(red: 229/255, green: 168/255, blue: 35/255, alpha: 1.0)]
             var bName = true
             var bWord = true
             let uName = usernameField.text!
@@ -98,6 +85,11 @@ class LoginViewController: UIViewController {
         return true
     }
     
+    @IBAction func forgotPassword(_ sender: Any) {
+        let alertController = UIAlertController(title: "Forgot Password", message: "Incomplete function, will implement later", preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
     /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showConversations" {

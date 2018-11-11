@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        if isLoggedIn(){
+            showConversationController()
+        }
         return true
     }
 
@@ -42,5 +45,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+    fileprivate func isLoggedIn() -> Bool{
+        return UserDefaults.standard.isLoggedIn()
+    }
+    
+    func showConversationController() {
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let conversationController = storyboard.instantiateViewController(withIdentifier: "ConversationNavigation") as! UINavigationController
+        self.window?.rootViewController = conversationController
+    }
 }
 
