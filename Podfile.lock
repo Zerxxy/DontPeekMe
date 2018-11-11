@@ -1,0 +1,16 @@
+PODS:
+  - InitialsImageView (0.4.0)
+
+DEPENDENCIES:
+  - InitialsImageView
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - InitialsImageView
+
+SPEC CHECKSUMS:
+  InitialsImageView: bea137b6281b3a82ccef09327986ec78a1a0da37
+
+PODFILE CHECKSUM: c48ad41d4dc8c53b1b2823ae3ea58790ea8d01ee
+
+COCOAPODS: 1.5.3

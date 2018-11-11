@@ -7,12 +7,11 @@
 //
 
 import UIKit
+import InitialsImageView
 
 class ConversationsTableViewController: UITableViewController {
-
-    @IBOutlet var loggedInNameLabel: UILabel?
     
-    var conversationNames = ["Neil", "Addison", "Warren"]
+    var conversationNames = ["Neil Warren", "Addison", "Warren"]
     var testConversation = "This is a test conversation to see if text wrapping works correctly.  The text message preview should be able to show 3 lines of text before cutting off."
     
     override func viewDidLoad() {
@@ -26,8 +25,6 @@ class ConversationsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleSignOut))
-        let loggedInName = UserDefaults.standard.nameLoggedIn()
-        loggedInNameLabel!.text = loggedInName
     }
 
     func signOut(){
@@ -62,11 +59,13 @@ class ConversationsTableViewController: UITableViewController {
         
         // Configure the cell...
         
-        cell.nameLabel.text = conversationNames[indexPath.row]
+        let cellName = conversationNames[indexPath.row]
+        cell.nameLabel.text = cellName
         cell.messageLabel.text = testConversation
         cell.messageLabel.sizeToFit()
-        cell.thumbnailImageView.layer.cornerRadius = cell.thumbnailImageView.frame.size.width / 2
-        cell.thumbnailImageView.clipsToBounds = true
+        cell.thumbnailImageView.setImageForName(cellName, backgroundColor: nil, circular: true, textAttributes: nil, gradient: true)
+        //cell.thumbnailImageView.layer.cornerRadius = cell.thumbnailImageView.frame.size.width / 2
+        //cell.thumbnailImageView.clipsToBounds = true
 
         return cell
     }
