@@ -9,6 +9,7 @@
 //  the view will change to the conversations
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -17,10 +18,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var forgotPasswordButton: UIButton!
     @IBOutlet var signUpButton: UIButton!
-    
+    var isLoggedIn = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Set the background color and login button color
         let bgTopColor = UIColor(red: 0, green: 85/255, blue: 162/255, alpha: 0.75)
         let bgBottomColor = UIColor(red: 0, green: 85/255, blue: 162/255, alpha: 1.0)
@@ -64,10 +64,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
         }
     }
-    func logIn(uName: String, pWord: String) -> Bool{
+    func logIn(uName: String, pWord: String){
         //Attempt to log in, will update with firebase Auth later
-        UserDefaults.standard.setLoggedIn(value: true, name: uName)
-        return true;
+        Auth.auth().signIn(withEmail: uName,password: pWord) { (user,error) in
+            if user != nil {
+                UserDefaults.standard.setLoggedIn(value: true, name: "uName")
+                self.performSegue(withIdentifier: "showConversations", sender: self)
+            } else {
+                UserDefaults.standard.setLoggedIn(value: false, name: "uName")
+            }
+        }
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -93,7 +99,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             if(!(bWord && bName)){
                 return false
             }
-            return logIn(uName: uName, pWord: pWord)
+            logIn(uName: uName, pWord: pWord)
+            return false
+            
         }
         return true
     }
