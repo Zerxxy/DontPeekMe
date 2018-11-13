@@ -9,18 +9,31 @@
 import UIKit
 import InitialsImageView
 import LocalAuthentication
+import FirebaseFirestore
+import FirebaseAuth
 
 class ConversationsTableViewController: UITableViewController {
     private var roundButton = UIButton()
     private var isBlurred = true
     var conversationNames = ["Neil Warren", "Addison", "Warren"]
     var testConversation = "This is a test conversation to see if text wrapping works correctly.  The text message preview should be able to show 3 lines of text before cutting off."
-    
+        var db: Firestore!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.layoutMargins = UIEdgeInsets.zero
-
+        let settings = FirestoreSettings()
+        Firestore.firestore().settings = settings
+        db = Firestore.firestore()
+        db.collection("User").document("test").getDocument {(document, error) in
+            if let document = document, document.exists {
+                let documentData = document.data()
+                self.conversationNames = documentData?["Conversations"] as! [String]
+            } else {
+                print("Document does not exist")
+            }
+        }
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

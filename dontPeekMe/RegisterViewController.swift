@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
 
@@ -17,9 +18,13 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var phoneNumberField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     
+    var db: Firestore!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let settings = FirestoreSettings()
+        Firestore.firestore().settings = settings
+        db = Firestore.firestore()
         // Set up all the colors
         let bgTopColor = UIColor(red: 0, green: 85/255, blue: 162/255, alpha: 0.75)
         let bgBottomColor = UIColor(red: 0, green: 85/255, blue: 162/255, alpha: 1.0)
@@ -71,7 +76,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func attemptRegister(_ sender: Any) {
-        let alertController = UIAlertController(title: "Register", message: "Incomplete function, will implement later", preferredStyle: UIAlertController.Style.alert)
+        Auth.auth().createUser(withEmail: self.registerUsernameField.text!, password: self.registerPasswordField.text!) { (authResult,error) in
+            var uid = authResult?.user.uid
+            self.db.collection("Users").document(uid!).setData(["PhoneNumber": self.phoneNumberField.text!, "Conversations": []])
+        }
+        let alertController = UIAlertController(title: "Register", message: "Registered!", preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
