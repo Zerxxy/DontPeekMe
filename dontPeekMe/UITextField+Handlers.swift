@@ -11,6 +11,7 @@ import UIKit
 extension UITextField{
     
     func addUnderLine(lineColor: UIColor){
+        self.layoutIfNeeded()
         if let placeholderStr = self.attributedPlaceholder?.string{
             let placeholderAttributes = [NSAttributedString.Key.foregroundColor: lineColor]
             self.attributedPlaceholder = NSAttributedString(string: placeholderStr, attributes: placeholderAttributes)

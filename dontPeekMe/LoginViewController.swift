@@ -10,7 +10,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
@@ -35,14 +35,27 @@ class LoginViewController: UIViewController {
         usernameField.addUnderLine(lineColor: lineColor)
         passwordField.addUnderLine(lineColor: lineColor)
         
+        self.usernameField.delegate = self
+        self.passwordField.delegate = self
+        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     override open var shouldAutorotate: Bool{
         return false
     }
     
+    // Incomplete, will replace segue with this later
     @IBAction func attemptLogin(_ sender: Any) {
         let attributedStringColor = [NSAttributedString.Key.foregroundColor : UIColor.red]
         if let uName = usernameField.text{

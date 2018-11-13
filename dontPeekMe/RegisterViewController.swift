@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var registerUsernameField: UITextField!
     @IBOutlet weak var registerPasswordField: UITextField!
@@ -40,6 +40,12 @@ class RegisterViewController: UIViewController {
         repeatedPasswordField.addUnderLine(lineColor: textColor)
         phoneNumberField.addUnderLine(lineColor: textColor)
         
+        self.registerUsernameField.delegate = self
+        self.registerPasswordField.delegate = self
+        self.repeatedPasswordField.delegate = self
+        
+        phoneNumberField.keyboardType = UIKeyboardType.numberPad
+        
         // Set up navigation bar
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -48,6 +54,15 @@ class RegisterViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = backButton
         self.navigationItem.leftBarButtonItem?.tintColor = textColor
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     override open var shouldAutorotate: Bool{

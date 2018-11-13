@@ -9,7 +9,9 @@
 import UIKit
 
 extension UIButton{
+    
     func setGradientBackground(topColor: UIColor, bottomColor: UIColor){
+        self.layoutIfNeeded()
         let buttonLayer = CAGradientLayer()
 
         buttonLayer.frame = bounds

@@ -19,4 +19,8 @@ extension UIViewController{
         bgLayer.endPoint = CGPoint(x:0, y:1)
         view.layer.insertSublayer(bgLayer, at: 0)
     }
+    
+    func dissmissKeyboard() {
+        self.view.endEditing(true)
+    }
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F8A-N8-2zn">
-    <device id="retina5_5" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +15,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="Conversations" id="ltC-fX-Ygg" customClass="ConversationsTableViewController" customModule="dontPeekMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Wmx-zS-IMX">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -25,9 +26,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="79.666666666666671"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dvW-wH-oQM">
-                                            <rect key="frame" x="19" y="10" width="60" height="60"/>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5xp-aN-SU9">
                                             <rect key="frame" x="83" y="27" width="296" height="47"/>
                                             <fontDescription key="fontDescription" name="PingFangSC-Light" family="PingFang SC" pointSize="12"/>
@@ -40,22 +38,24 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dvW-wH-oQM">
+                                            <rect key="frame" x="8.9999999999999964" y="9.9999999999999964" width="59.666666666666657" height="59.666666666666657"/>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="3zo-iQ-LNT" firstAttribute="leading" secondItem="5xp-aN-SU9" secondAttribute="leading" id="0mF-q9-se2"/>
                                         <constraint firstItem="3zo-iQ-LNT" firstAttribute="top" secondItem="6Lg-LW-UXh" secondAttribute="topMargin" constant="-7" id="2CA-Qh-Jto"/>
-                                        <constraint firstItem="5xp-aN-SU9" firstAttribute="leading" secondItem="dvW-wH-oQM" secondAttribute="trailing" constant="4" id="2R1-3r-FbS"/>
+                                        <constraint firstItem="5xp-aN-SU9" firstAttribute="leading" secondItem="dvW-wH-oQM" secondAttribute="trailing" constant="14.333333333333343" id="2R1-3r-FbS"/>
                                         <constraint firstItem="5xp-aN-SU9" firstAttribute="top" secondItem="6Lg-LW-UXh" secondAttribute="topMargin" constant="16" id="7cn-3x-lal"/>
-                                        <constraint firstItem="3zo-iQ-LNT" firstAttribute="leading" secondItem="dvW-wH-oQM" secondAttribute="trailing" constant="4" id="8Gh-gM-GSe"/>
-                                        <constraint firstItem="3zo-iQ-LNT" firstAttribute="leading" secondItem="dvW-wH-oQM" secondAttribute="trailing" constant="4" id="8uv-Nb-pWe"/>
-                                        <constraint firstItem="3zo-iQ-LNT" firstAttribute="top" secondItem="dvW-wH-oQM" secondAttribute="top" constant="-6" id="CcL-hH-keg"/>
+                                        <constraint firstItem="3zo-iQ-LNT" firstAttribute="leading" secondItem="dvW-wH-oQM" secondAttribute="trailing" constant="14.333333333333343" id="8uv-Nb-pWe"/>
                                         <constraint firstItem="3zo-iQ-LNT" firstAttribute="leading" secondItem="6Lg-LW-UXh" secondAttribute="leading" constant="83" id="Gc4-FL-aZN"/>
+                                        <constraint firstAttribute="bottom" secondItem="dvW-wH-oQM" secondAttribute="bottom" constant="10.000000000000014" id="T7J-A6-G3Z"/>
                                         <constraint firstItem="5xp-aN-SU9" firstAttribute="bottom" secondItem="6Lg-LW-UXh" secondAttribute="bottomMargin" constant="5" id="VaL-gO-TgD"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="3zo-iQ-LNT" secondAttribute="bottom" constant="42" id="VnG-cr-Ek2"/>
+                                        <constraint firstItem="dvW-wH-oQM" firstAttribute="leading" secondItem="6Lg-LW-UXh" secondAttribute="leading" constant="9" id="WgV-OQ-ICD"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3zo-iQ-LNT" secondAttribute="trailing" constant="20" symbolic="YES" id="XT2-Ww-oMH"/>
-                                        <constraint firstItem="5xp-aN-SU9" firstAttribute="leading" secondItem="dvW-wH-oQM" secondAttribute="trailing" constant="4" id="cAi-za-hzX"/>
+                                        <constraint firstItem="dvW-wH-oQM" firstAttribute="top" secondItem="6Lg-LW-UXh" secondAttribute="top" constant="10" id="cri-59-U9R"/>
                                         <constraint firstItem="5xp-aN-SU9" firstAttribute="trailing" secondItem="6Lg-LW-UXh" secondAttribute="trailingMargin" constant="-15" id="kX8-Sh-Plz"/>
-                                        <constraint firstItem="dvW-wH-oQM" firstAttribute="leading" secondItem="6Lg-LW-UXh" secondAttribute="leadingMargin" constant="-1" id="kge-HC-qLQ"/>
                                         <constraint firstItem="dvW-wH-oQM" firstAttribute="centerY" secondItem="6Lg-LW-UXh" secondAttribute="centerY" id="rao-Hp-ayy"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -82,11 +82,11 @@
             <objects>
                 <viewController storyboardIdentifier="Login" id="Xxj-cq-4La" customClass="LoginViewController" customModule="dontPeekMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Feb-t3-Wjk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YdN-7I-O8o">
-                                <rect key="frame" x="36" y="503" width="342" height="36"/>
+                                <rect key="frame" x="36" y="629" width="342" height="36"/>
                                 <color key="backgroundColor" red="0.82098287339999998" green="0.63072061540000002" blue="0.19670891760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="loginButton"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="17"/>
@@ -98,15 +98,16 @@
                                     <segue destination="LfD-xJ-oXC" kind="show" identifier="showConversations" id="hga-Wi-IDY"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7YZ-mv-rl8">
-                                <rect key="frame" x="36" y="424" width="342" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7YZ-mv-rl8">
+                                <rect key="frame" x="36" y="550" width="342" height="30"/>
+                                <color key="tintColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="passwordField"/>
                                 <color key="textColor" red="0.63529411764705879" green="0.63529411764705879" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HvF-cR-8Cc">
-                                <rect key="frame" x="36" y="592" width="342" height="36"/>
+                                <rect key="frame" x="36" y="718" width="342" height="36"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="xIc-hC-bWo"/>
@@ -114,7 +115,7 @@
                                 <state key="normal" title="Placeholder for Google"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Q2-mL-0Ms">
-                                <rect key="frame" x="144.66666666666666" y="667" width="124.99999999999997" height="30"/>
+                                <rect key="frame" x="144.66666666666666" y="793" width="124.99999999999997" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Here?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXn-hs-3e4">
                                         <rect key="frame" x="0.0" y="5" width="67" height="20"/>
@@ -147,7 +148,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Wl-Dh-mW8">
-                                <rect key="frame" x="265" y="462" width="113" height="20"/>
+                                <rect key="frame" x="265" y="588" width="113" height="20"/>
                                 <accessibility key="accessibilityConfiguration" identifier="forgotPasswordButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Xqm-ug-0Wx"/>
@@ -161,7 +162,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEW-z2-ocN">
-                                <rect key="frame" x="119.66666666666669" y="186" width="175" height="42"/>
+                                <rect key="frame" x="119.66666666666669" y="312" width="175" height="42"/>
                                 <attributedString key="attributedText">
                                     <fragment content="dont">
                                         <attributes>
@@ -181,13 +182,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZ5-ff-ksa">
-                                <rect key="frame" x="197.66666666666666" y="556" width="19" height="19"/>
+                                <rect key="frame" x="197.66666666666666" y="682" width="19" height="19"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="13"/>
                                 <color key="textColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username/Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RZq-tM-Cya">
-                                <rect key="frame" x="36" y="376" width="342" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username/Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="RZq-tM-Cya">
+                                <rect key="frame" x="36" y="502" width="342" height="30"/>
+                                <color key="tintColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="usernameField"/>
                                 <color key="textColor" red="0.63529411764705879" green="0.63529411764705879" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="17"/>
@@ -240,11 +242,11 @@
             <objects>
                 <viewController storyboardIdentifier="Register" id="raY-wB-bty" customClass="RegisterViewController" customModule="dontPeekMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KGU-ay-9ye">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U8h-gO-H87">
-                                <rect key="frame" x="36" y="592" width="342" height="36"/>
+                                <rect key="frame" x="36" y="718" width="342" height="36"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="aoM-cr-hWW"/>
@@ -252,7 +254,7 @@
                                 <state key="normal" title="Placeholder for Google"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGY-I6-Ho8">
-                                <rect key="frame" x="36" y="503" width="342" height="36"/>
+                                <rect key="frame" x="36" y="629" width="342" height="36"/>
                                 <color key="backgroundColor" red="0.82098287339999998" green="0.63072061540000002" blue="0.19670891760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="loginButton"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="17"/>
@@ -265,41 +267,45 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQx-8Q-9eS">
-                                <rect key="frame" x="197.66666666666666" y="556" width="19" height="19"/>
+                                <rect key="frame" x="197.66666666666666" y="682" width="19" height="19"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="13"/>
                                 <color key="textColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Repeat Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bXP-13-sIE">
-                                <rect key="frame" x="36" y="376" width="342" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Repeat Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bXP-13-sIE">
+                                <rect key="frame" x="36" y="502" width="342" height="30"/>
+                                <color key="tintColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="repeatedPasswordField"/>
                                 <color key="textColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ofi-Dd-w9W">
-                                <rect key="frame" x="36" y="328" width="342" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ofi-Dd-w9W">
+                                <rect key="frame" x="36" y="454" width="342" height="30"/>
+                                <color key="tintColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="registerPasswordField"/>
                                 <color key="textColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hHo-IH-SL4">
-                                <rect key="frame" x="36" y="424" width="342" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hHo-IH-SL4">
+                                <rect key="frame" x="36" y="550" width="342" height="30"/>
+                                <color key="tintColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="phoneNumberField"/>
                                 <color key="textColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username/Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xNl-Og-NRY">
-                                <rect key="frame" x="36" y="280" width="342" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username/Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xNl-Og-NRY">
+                                <rect key="frame" x="36" y="406" width="342" height="30"/>
+                                <color key="tintColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="registerUsernameField"/>
                                 <color key="textColor" red="0.63529411759999999" green="0.63529411759999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pWZ-5m-MDr">
-                                <rect key="frame" x="119.66666666666669" y="186" width="175" height="42"/>
+                                <rect key="frame" x="119.66666666666669" y="312" width="175" height="42"/>
                                 <attributedString key="attributedText">
                                     <fragment content="dont">
                                         <attributes>
@@ -365,7 +371,7 @@
                 <navigationController storyboardIdentifier="MainNavigation" automaticallyAdjustsScrollViewInsets="NO" id="F8A-N8-2zn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NTK-JO-0D3">
-                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -383,7 +389,7 @@
                 <navigationController storyboardIdentifier="ConversationNavigation" automaticallyAdjustsScrollViewInsets="NO" id="LfD-xJ-oXC" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HF9-uX-K0b">
-                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
