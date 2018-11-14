@@ -20,7 +20,7 @@ A step by step series of examples that tell you how to get a development env run
 3.In the text field enter https://github.com/Zerxxy/DontPeekMe.git
 4.Click Done
 5.Open a terminal window and change directory to the cloned Xcode project
-6.Once inside the correct directory, run "pod install" 
+6.Once inside the correct directory, run "pod install"
 7.After installing the cocoapods, go back to the Xcode window
 8.Select the play button in the upper left to run
 
