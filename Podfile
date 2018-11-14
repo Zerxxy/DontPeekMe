@@ -10,6 +10,7 @@ target 'dontPeekMe' do
   pod "InitialsImageView"
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
 
   target 'dontPeekMeTests' do
     inherit! :search_paths
