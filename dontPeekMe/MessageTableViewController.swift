@@ -30,7 +30,7 @@ class MessageTableViewController: UITableViewController {
         super.viewDidLoad()
         
         //register each cell to use custom cell
-        tableView.register(MessagesCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(MessagesTableViewCell.self, forCellReuseIdentifier: cellId)
         
         //remove lines in our table view
         tableView.separatorStyle = .none
@@ -50,7 +50,7 @@ class MessageTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MessagesCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MessagesTableViewCell
         
         //Sets the text and if its incoming or not for the view
         let chatMessage = textMessages[indexPath.row]

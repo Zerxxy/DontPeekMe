@@ -29,6 +29,7 @@
 		92E8679E4940360EDF3A60B7 /* Pods_dontPeekMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EC5B920A9A359C062EF9E8 /* Pods_dontPeekMe.framework */; };
 		BB893FEF219C0942004CB40C /* MessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB893FEE219C0942004CB40C /* MessageTableViewController.swift */; };
 		BB893FF1219C0977004CB40C /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB893FF0219C0976004CB40C /* MessageTableViewCell.swift */; };
+		BBB5AEA521A0FE3B00F11BAE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBB5AEA421A0FE3B00F11BAE /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		B580D559CECB2E3BEF73905A /* Pods-dontPeekMeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dontPeekMeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-dontPeekMeUITests/Pods-dontPeekMeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB893FEE219C0942004CB40C /* MessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewController.swift; sourceTree = "<group>"; };
 		BB893FF0219C0976004CB40C /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
+		BBB5AEA421A0FE3B00F11BAE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D67C2FF031F06EE317773A2F /* Pods_dontPeekMeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dontPeekMeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEAB91543B3A21C3EA0D70DB /* Pods-dontPeekMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dontPeekMeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-dontPeekMeUITests/Pods-dontPeekMeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		FDEDAC306E3CF8F6611AAD22 /* Pods_dontPeekMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dontPeekMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +171,7 @@
 				285ECDDE2197CACC00C59F2D /* PNTextField.swift */,
 				BB893FEE219C0942004CB40C /* MessageTableViewController.swift */,
 				BB893FF0219C0976004CB40C /* MessageTableViewCell.swift */,
+				BBB5AEA421A0FE3B00F11BAE /* GoogleService-Info.plist */,
 			);
 			path = dontPeekMe;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28A5894021928648005FF14F /* LaunchScreen.storyboard in Resources */,
+				BBB5AEA521A0FE3B00F11BAE /* GoogleService-Info.plist in Resources */,
 				28A5893D21928648005FF14F /* Assets.xcassets in Resources */,
 				28A5893B21928647005FF14F /* Main.storyboard in Resources */,
 			);
@@ -342,13 +346,35 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-dontPeekMe/Pods-dontPeekMe-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/InitialsImageView/InitialsImageView.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InitialsImageView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
