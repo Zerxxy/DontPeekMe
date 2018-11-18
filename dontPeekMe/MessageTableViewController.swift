@@ -15,11 +15,12 @@ struct Message {
 
 class MessageTableViewController: UITableViewController {
     
-    fileprivate let cellId = "id"
+    fileprivate let cellId = "messageCell"
     
     //array of messages
     var textMessages = [
-        Message(text: "Hi", isIncoming: true), Message(text: "Wassup?", isIncoming: false),
+        Message(text: "hi", isIncoming: true),
+        Message(text: "Wassup?", isIncoming: false),
         Message(text: "Wanna hang out", isIncoming: true),
         Message(text: "Hmmmm, I might not really have time this weekend. Do you think next weekend we can hang out? I have other things to do this week!", isIncoming: false),
         Message(text: "This code should have white background", isIncoming: true),
@@ -57,7 +58,7 @@ class MessageTableViewController: UITableViewController {
         //        cell.messageLabel.text = chatMessage.text
         //        cell.isIncoming = chatMessage.isIncoming
         
-        cell.Message = chatMessage
+        cell.message = chatMessage
         
         return cell
     }

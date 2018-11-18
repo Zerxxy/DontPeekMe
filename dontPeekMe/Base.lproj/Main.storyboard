@@ -63,6 +63,7 @@
                                     <outlet property="messageLabel" destination="5xp-aN-SU9" id="PTe-rK-X4Q"/>
                                     <outlet property="nameLabel" destination="3zo-iQ-LNT" id="h0T-nR-ktL"/>
                                     <outlet property="thumbnailImageView" destination="dvW-wH-oQM" id="ih2-Ck-uQN"/>
+                                    <segue destination="v5x-r6-RW3" kind="show" identifier="showMessages" id="E72-DO-Xay"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -77,9 +78,10 @@
             </objects>
             <point key="canvasLocation" x="2864" y="-40"/>
         </scene>
-        <!--Message Table View Controller-->
+        <!--Messages-->
         <scene sceneID="vDr-Cv-QxX">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LMr-KR-PNG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="v5x-r6-RW3" customClass="MessageTableViewController" customModule="dontPeekMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fCg-35-ibK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -101,10 +103,10 @@
                             <outlet property="delegate" destination="v5x-r6-RW3" id="fpM-XE-rHO"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Messages" id="KzQ-o6-yHJ"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LMr-KR-PNG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3693" y="-40"/>
+            <point key="canvasLocation" x="3920" y="-40"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="3jM-fN-LQS">

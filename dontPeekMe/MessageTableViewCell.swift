@@ -10,20 +10,20 @@ import UIKit
 
 class MessagesTableViewCell: UITableViewCell {
     
-    let messageView = UIView()
+    let bubbleBackgroundView = UIView()
     let messageLabel = UILabel()
     
     var leadingConstraint: NSLayoutConstraint!
     var trailingConstraint: NSLayoutConstraint!
     
-    var Message: Message! {
+    var message: Message! {
         didSet {
-            messageView.backgroundColor = Message.isIncoming ? .white : UIColor(red: 35, green: 84, blue: 157, alpha: 1)
-            messageLabel.textColor = Message.isIncoming ? .black : .white
+            bubbleBackgroundView.backgroundColor = message.isIncoming ? .white : UIColor(red: 0, green: 86/255, blue: 162/255, alpha: 1.0)
+            messageLabel.textColor = message.isIncoming ? .black : .white
             
-            messageLabel.text = Message.text
+            messageLabel.text = message.text
             
-            if Message.isIncoming {
+            if message.isIncoming {
                 leadingConstraint.isActive = true
                 trailingConstraint.isActive = false
             } else {
@@ -32,23 +32,23 @@ class MessagesTableViewCell: UITableViewCell {
             }
         }
     }
-    var isIncoming: Bool! {
-        didSet {
-            messageView.backgroundColor = isIncoming ? .white : UIColor(red: 35, green: 84, blue: 157, alpha: 1)
-            messageLabel.textColor = isIncoming ? .black : .white
-        }
-    }
+//    var isIncoming: Bool! {
+//        didSet {
+//            bubbleBackgroundView.backgroundColor = isIncoming ? .white : UIColor(red: 35, green: 84, blue: 157, alpha: 1)
+//            messageLabel.textColor = isIncoming ? .black : .white
+//        }
+//    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = .clear
         
-        messageView.backgroundColor = .yellow
-        messageView.layer.cornerRadius = 12
-        messageView.translatesAutoresizingMaskIntoConstraints = false
+        //bubbleBackgroundView.backgroundColor = .yellow
+        bubbleBackgroundView.layer.cornerRadius = 12
+        bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         
-        addSubview(messageView)
+        addSubview(bubbleBackgroundView)
         addSubview(messageLabel)
         
         messageLabel.numberOfLines = 0
@@ -61,15 +61,15 @@ class MessagesTableViewCell: UITableViewCell {
             messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -32),
             messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250),
             
-            messageView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -16),
-            messageView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -16),
-            messageView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16),
-            messageView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 16)
+            bubbleBackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -16),
+            bubbleBackgroundView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -16),
+            bubbleBackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16),
+            bubbleBackgroundView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 16)
         ]
         NSLayoutConstraint.activate(labelConstraints)
         
         leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
-        trailingConstraint = messageLabel.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
+        trailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
     }
     
     required init?(coder aDecoder: NSCoder) {
