@@ -2,78 +2,54 @@
 //  MessagesCell.swift
 //  dontPeekMe
 //
-//  Created by Warren Liang on 11/13/18.
+//  Created by Warren Liang on 11/20/18.
 //  Copyright © 2018 Neil Warren. All rights reserved.
 //
 
 import UIKit
 
 class MessagesCell: UITableViewCell {
+
+    @IBOutlet weak var recievedMessageLbl: UILabel!
+    @IBOutlet weak var recievedMessageView: UIView!
+    @IBOutlet weak var sentMessageLabel: UILabel!
+    @IBOutlet weak var sentMessageView: UIView!
     
-    let messageView = UIView()
-    let messageLabel = UILabel()
+    var message: Message!
+    var currentUser: String! //not sure if this will be necessary
     
-    var leadingConstraint: NSLayoutConstraint!
-    var trailingConstraint: NSLayoutConstraint!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        recievedMessageView.layer.cornerRadius = 12
+        recievedMessageView.translatesAutoresizingMaskIntoConstraints = false
+        sentMessageView.layer.cornerRadius = 12
+        sentMessageView.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
     
-    var Message: Message! {
-        didSet {
-            messageView.backgroundColor = Message.isIncoming ? .white : UIColor(red: 35, green: 84, blue: 157, alpha: 1)
-            messageLabel.textColor = Message.isIncoming ? .black : .white
+    
+    func configCell(message: Message) {
+        self.message = message
+        
+        if message.sender == currentUser {
+            sentMessageView.isHidden = false
+            sentMessageLabel.text = message.message
             
-            messageLabel.text = Message.text
+            recievedMessageLbl.text = ""
+            recievedMessageView.isHidden = true
+        } else {
+            sentMessageView.isHidden = true
+            sentMessageLabel.text = ""
             
-            if Message.isIncoming {
-                leadingConstraint.isActive = true
-                trailingConstraint.isActive = false
-            } else {
-                leadingConstraint.isActive = false
-                trailingConstraint.isActive = true
-            }
+            recievedMessageLbl.text = message.message
+            recievedMessageView.isHidden = false
         }
     }
-    var isIncoming: Bool! {
-        didSet {
-            messageView.backgroundColor = isIncoming ? .white : UIColor(red: 35, green: 84, blue: 157, alpha: 1)
-            messageLabel.textColor = isIncoming ? .black : .white
-        }
-    }
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        backgroundColor = .clear
-        
-        messageView.backgroundColor = .yellow
-        messageView.layer.cornerRadius = 12
-        messageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        addSubview(messageView)
-        addSubview(messageLabel)
-        
-        messageLabel.numberOfLines = 0
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        //constraints of our message label
-        let labelConstraints = [
-            messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32),
-            
-            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -32),
-            messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250),
-            
-            messageView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -16),
-            messageView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -16),
-            messageView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16),
-            messageView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 16)
-        ]
-        NSLayoutConstraint.activate(labelConstraints)
-        
-        leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
-        trailingConstraint = messageLabel.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
 }

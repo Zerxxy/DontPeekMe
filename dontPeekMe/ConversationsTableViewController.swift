@@ -93,7 +93,7 @@ class ConversationsTableViewController: UITableViewController {
         cell.messageLabel.sizeToFit()
         cell.thumbnailImageView.setImageForName(cellName, backgroundColor: nil, circular: true, textAttributes: nil, gradient: true)
         if isBlurred{
-            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
+            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
             let blurView = UIVisualEffectView(effect: blurEffect)
             blurView.frame = cell.messageLabel.bounds
             // Unique identifier (tag) for blur effect
