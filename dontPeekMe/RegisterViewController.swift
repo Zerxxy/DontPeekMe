@@ -76,18 +76,29 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func attemptRegister(_ sender: Any) {
-        Auth.auth().createUser(withEmail: self.registerUsernameField.text!, password: self.registerPasswordField.text!) { (authResult,error) in
-            var uid = authResult?.user.uid
-            self.db.collection("Users").document(uid!).setData(["PhoneNumber": self.phoneNumberField.text!, "Conversations": []])
+        let email = registerUsernameField.text!
+        let password = registerPasswordField.text!
+        let phoneNumber = phoneNumberField.text!
+        Authorization.instance.register(email: email, password: password, phoneNumber: phoneNumber) { (errMsg, data) in
+            guard errMsg == nil else{
+                let alert = UIAlertController(title: "Error Authentication", message: errMsg, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            let alertController = UIAlertController(title: "Register", message: "Registered!", preferredStyle: UIAlertController.Style.alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { _ -> Void in
+                let loginView = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+                self.present(loginView!, animated: true, completion: nil)
+            }))
+            self.present(alertController, animated: true, completion: nil)
         }
-        let alertController = UIAlertController(title: "Register", message: "Registered!", preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        present(alertController, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
     }
+
 
     /*
     // MARK: - Navigation

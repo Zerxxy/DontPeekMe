@@ -19,6 +19,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var forgotPasswordButton: UIButton!
     @IBOutlet var signUpButton: UIButton!
     var isLoggedIn = false
+    
+    typealias Completion = (_ errMsg: String?, _ data: AnyObject?) -> Void
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set the background color and login button color
@@ -57,53 +60,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // Incomplete, will replace segue with this later
     @IBAction func attemptLogin(_ sender: Any) {
-        let attributedStringColor = [NSAttributedString.Key.foregroundColor : UIColor.red]
-        if let uName = usernameField.text{
-            
-        }else{
-            
+        let uName = usernameField.text!
+        let pWord = passwordField.text!
+        Authorization.instance.login(email: uName, password: pWord) { (errMsg, data) in
+            guard errMsg == nil else{
+                let alert = UIAlertController(title: "Error Authentication", message: errMsg, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            UserDefaults.standard.setLoggedIn(value: true, name: uName)
+            self.performSegue(withIdentifier: "showConversations", sender: self)
         }
-    }
-    func logIn(uName: String, pWord: String){
-        //Attempt to log in, will update with firebase Auth later
-        Auth.auth().signIn(withEmail: uName,password: pWord) { (user,error) in
-            if user != nil {
-                UserDefaults.standard.setLoggedIn(value: true, name: "uName")
-                self.performSegue(withIdentifier: "showConversations", sender: self)
-            } else {
-                UserDefaults.standard.setLoggedIn(value: false, name: "uName")
-            }
-        }
-    }
-    
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == "showConversations"{
-            let attributedStringColor = [NSAttributedString.Key.foregroundColor : UIColor(red: 229/255, green: 168/255, blue: 35/255, alpha: 1.0)]
-            var bName = true
-            var bWord = true
-            let uName = usernameField.text!
-            let pWord = passwordField.text!
-            if uName.isEmpty{
-                var myMutableStringUsername = NSMutableAttributedString()
-                myMutableStringUsername = NSMutableAttributedString(string: "Please enter a Username/Email", attributes: attributedStringColor)
-                usernameField.attributedPlaceholder = myMutableStringUsername
-                bName = false
-            }
-            if pWord.isEmpty{
-                var myMutableStringPassword = NSMutableAttributedString()
-                myMutableStringPassword = NSMutableAttributedString(string: "Please enter a Password", attributes: attributedStringColor)
-                passwordField.attributedPlaceholder = myMutableStringPassword
-                bWord = false
-            }
-            
-            if(!(bWord && bName)){
-                return false
-            }
-            logIn(uName: uName, pWord: pWord)
-            return false
-            
-        }
-        return true
     }
     
     @IBAction func forgotPassword(_ sender: Any) {
@@ -111,22 +79,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
-    /*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showConversations" {
-            let destinationController = segue.destination as! UINavigationController
-            let topViewController = destinationController.topViewController as! ConversationsTableViewController
-        }
-    }
-    */
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
