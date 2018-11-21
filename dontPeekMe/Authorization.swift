@@ -1,0 +1,99 @@
+//
+//  Authorization.swift
+//  dontPeekMe
+//
+//  Created by Neil Warren on 11/19/18.
+//  Copyright © 2018 Neil Warren. All rights reserved.
+//
+
+import Foundation
+import FirebaseFirestore
+import FirebaseAuth
+
+typealias Completion = (_ errMsg: String?, _ data: AnyObject?) -> Void
+
+/**
+ Provides authorization functions for the DontPeekMe application
+ */
+class Authorization{
+    private static let _instance = Authorization()
+    var db: Firestore!
+    
+    static var instance: Authorization {
+        return _instance
+    }
+    
+    /**
+     Initializes an instance of Authorization by setting up the Firebase settings
+     */
+    init() {
+        let settings = FirestoreSettings()
+        Firestore.firestore().settings = settings
+        db = Firestore.firestore()
+    }
+    
+    /**
+     Attempts to login, throws error if found, handled with handleFirebaseError
+     
+     - Parameter uName: The email of the user
+     - Parameter pWord: The password of the user
+     - Parameter onComplete: completion block to store either error string
+                 or user data
+     */
+    func login(email: String, password: String, onComplete: Completion?){
+        Auth.auth().signIn(withEmail: email,password: password) { (user,error) in
+            if error != nil{
+                self.handleFirebaseError(error: error! as NSError, onComplete: onComplete)
+            }
+            else{
+                onComplete?(nil, user)
+            }
+        }
+    }
+    /**
+     Attempts to register, throws error if found, handled with handleFirebaseError
+     
+     - Parameter email: The email of the user
+     - Parameter password: The password of the user
+     - Parameter phoneNumber: The phone number of the user
+     - Parameter onComplete: completion block to store either error string
+                 or user data
+     */
+    func register(email: String, password: String, phoneNumber: String, onComplete: Completion?){
+        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+            if error != nil{
+                self.handleFirebaseError(error: error! as NSError, onComplete: onComplete)
+            }
+            else{
+                let uid = authResult?.user.uid
+                self.db.collection("Users").document(uid!).setData(["PhoneNumber": phoneNumber, "Conversations": []])
+                onComplete?(nil, authResult)
+            }
+        }
+    }
+    
+    /**
+     Handles common Firebase errors, can add more later
+     
+     - Parameter error: The error passed from Firebase operation
+     - Parameter onComplete: completion block to store error string
+     */
+    func handleFirebaseError(error: NSError, onComplete: Completion?){
+        if let errorCode = AuthErrorCode(rawValue: error.code){
+            switch (errorCode){
+            case .invalidEmail:
+                onComplete?("Invalid email address!", nil)
+            case .wrongPassword:
+                onComplete?("Invalid password!", nil)
+            case .weakPassword:
+                onComplete?("Weak password. Please use at least 6 characters.", nil)
+            case .userNotFound:
+                onComplete?("User not found. Please register a new account.", nil)
+            case .emailAlreadyInUse, .accountExistsWithDifferentCredential:
+                onComplete?("Could not create account, email already in use!", nil)
+            default:
+                onComplete?("There was a problem with authentication. Please try again.", nil)
+            }
+        }
+    }
+}
