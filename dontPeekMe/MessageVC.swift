@@ -15,6 +15,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messageField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var textView: UIView!
     
     //segue current user and recipient collection id for FireBase
     var currentUser: String!
@@ -40,20 +41,29 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 //        }
         loadData(currentUser: "Warren", recipient: "Bob")
         
+        NotificationCenter.default.addObserver(self, selector: #selector(MessageVC.keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessageVC.keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         //moves the view of the table to the bottom where the newest messages will be
-//        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-//            self.moveToBottom()
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+            self.moveToBottom()
+        }
     }
     
     //shows the keyboard
-    func keyboardWillShow(notify: NSNotification) {
-        
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                self.textView.frame.origin.y -= keyboardSize.height
+        }
     }
     
     //hides the keyboard
-    func keyboardWillHide(notify: NSNotification) {
-        
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                self.textView.frame.origin.y += keyboardSize.height
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

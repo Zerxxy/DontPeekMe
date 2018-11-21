@@ -209,6 +209,7 @@
                         <outlet property="messageField" destination="5T0-NJ-7sJ" id="qR2-x8-yud"/>
                         <outlet property="sendButton" destination="wsN-Pm-WsV" id="8cr-q8-myX"/>
                         <outlet property="tableView" destination="4Io-hP-srS" id="UgN-Ya-iQ6"/>
+                        <outlet property="textView" destination="G0f-Ka-wLd" id="Kbs-vu-lKO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="32F-3d-rjp" userLabel="First Responder" sceneMemberID="firstResponder"/>
