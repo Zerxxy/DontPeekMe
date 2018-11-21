@@ -66,8 +66,25 @@ class Authorization{
             }
             else{
                 let uid = authResult?.user.uid
-                self.db.collection("Users").document(uid!).setData(["PhoneNumber": phoneNumber, "Conversations": []])
+                self.db.collection("Users").document(uid!).setData(["PhoneNumber": phoneNumber, "Email": email, "Conversations": []])
                 onComplete?(nil, authResult)
+            }
+        }
+    }
+    
+    func searchUsers(phoneNumber: String, onComplete: Completion?){
+        var users = [User]()
+        let userSearch = db.collection("Users").whereField("PhoneNumber", isEqualTo: phoneNumber)
+        userSearch.getDocuments() { (querySnapshot, err) in
+            if ((querySnapshot?.isEmpty)! || err != nil) {
+                onComplete?("Phone number does not exist!", nil)
+            } else {
+                for document in (querySnapshot!.documents){
+                    let email = document.data()
+                    let u = User(email: email["Email"] as! String, phoneNumber: phoneNumber)
+                    users.append(u)
+                }
+                onComplete?(nil, users as AnyObject)
             }
         }
     }

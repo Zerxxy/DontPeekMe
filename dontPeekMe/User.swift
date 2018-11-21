@@ -9,11 +9,12 @@
 import Foundation
 
 class User {
-    var name = ""
-    var image:String?
+    var email: String
+    var phoneNumber: String
     
-    init(name: String, image: String?) {
-        self.name = name
-        self.image = image
+    init(email: String, phoneNumber: String) {
+        self.email = email
+        self.phoneNumber = phoneNumber
     }
 }
+
