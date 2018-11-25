@@ -33,12 +33,22 @@ class ConversationsTableViewController: UITableViewController {
                 print("Document does not exist")
             }
         }
-        
+        let userTest = db.collection("Users").whereField("PhoneNumber", isEqualTo: "1231231")
+        userTest.getDocuments() { (querySnapshot, err) in
+            if let err = err{
+                print("Error")
+            } else {
+                for document in (querySnapshot!.documents){
+                    print(document.documentID)
+                }
+            }
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleSignOut))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewConversation))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -62,6 +72,13 @@ class ConversationsTableViewController: UITableViewController {
             // Funcitonality to do later?
         })
     }
+    
+    @objc func handleNewConversation() {
+        let newConversationController = NewConversationTableViewController()
+        let navController = UINavigationController(rootViewController: newConversationController)
+        present(navController, animated: true, completion: nil)
+    }
+    
     @objc func handleSignOut() {
         let alertController = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Sign Out", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in

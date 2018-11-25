@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import dontPeekMe
+@testable import Pods_dontPeekMe
 
 class dontPeekMeTests: XCTestCase {
 

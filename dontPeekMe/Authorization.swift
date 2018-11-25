@@ -71,7 +71,13 @@ class Authorization{
             }
         }
     }
-    
+    /**
+     Searches database for users with an exact phone number
+     
+     - Parameter phoneNumber: the phone number to search
+     - Parameter onComplete: completion block to store either error string
+                 or user data
+     */
     func searchUsers(phoneNumber: String, onComplete: Completion?){
         var users = [User]()
         let userSearch = db.collection("Users").whereField("PhoneNumber", isEqualTo: phoneNumber)
@@ -80,8 +86,33 @@ class Authorization{
                 onComplete?("Phone number does not exist!", nil)
             } else {
                 for document in (querySnapshot!.documents){
-                    let email = document.data()
-                    let u = User(email: email["Email"] as! String, phoneNumber: phoneNumber)
+                    let data = document.data()
+                    let uid = document.documentID
+                    let u = User(email: data["Email"] as! String, phoneNumber: phoneNumber, uid: uid)
+                    users.append(u)
+                }
+                onComplete?(nil, users as AnyObject)
+            }
+        }
+    }
+    
+    /**
+     Returns all registered users, used when creating new conversations
+     
+     - Parameter onComplete: completion block to store either error string
+                 or user data
+     */
+    func getAllUsers(onComplete: Completion?){
+        var users = [User]()
+        let userList = db.collection("Users")
+        userList.getDocuments() { (querySnapshot, err) in
+            if ((querySnapshot?.isEmpty)! || err != nil) {
+                onComplete?("No users found!", nil)
+            } else {
+                for document in (querySnapshot!.documents){
+                    let data = document.data()
+                    let uid = document.documentID
+                    let u = User(email: data["Email"] as! String, phoneNumber: data["PhoneNumber"] as! String, uid: uid)
                     users.append(u)
                 }
                 onComplete?(nil, users as AnyObject)
@@ -93,7 +124,8 @@ class Authorization{
      Handles common Firebase errors, can add more later
      
      - Parameter error: The error passed from Firebase operation
-     - Parameter onComplete: completion block to store error string
+     - Parameter onComplete: completion block to store either error string
+                 or user data
      */
     func handleFirebaseError(error: NSError, onComplete: Completion?){
         if let errorCode = AuthErrorCode(rawValue: error.code){

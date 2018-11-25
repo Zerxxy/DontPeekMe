@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		284BB9B321A4D3E80029850A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 284BB9B121A4D3E80029850A /* GoogleService-Info.plist */; };
 		284BB9B421A4D3E80029850A /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284BB9B221A4D3E80029850A /* Authorization.swift */; };
+		285181D021AA39B400289CB9 /* NewConversationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285181CF21AA39B400289CB9 /* NewConversationTableViewController.swift */; };
 		285ECDD721977C2100C59F2D /* UITextField+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285ECDD621977C2000C59F2D /* UITextField+Handlers.swift */; };
 		285ECDD92197ADF300C59F2D /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285ECDD82197ADF300C59F2D /* RegisterViewController.swift */; };
 		285ECDDB2197AE4100C59F2D /* UIViewController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285ECDDA2197AE4100C59F2D /* UIViewController+Handlers.swift */; };
@@ -54,6 +55,7 @@
 /* Begin PBXFileReference section */
 		284BB9B121A4D3E80029850A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		284BB9B221A4D3E80029850A /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
+		285181CF21AA39B400289CB9 /* NewConversationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationTableViewController.swift; sourceTree = "<group>"; };
 		285ECDD621977C2000C59F2D /* UITextField+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Handlers.swift"; sourceTree = "<group>"; };
 		285ECDD82197ADF300C59F2D /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		285ECDDA2197AE4100C59F2D /* UIViewController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Handlers.swift"; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				28A5893E21928648005FF14F /* LaunchScreen.storyboard */,
 				28A5894121928648005FF14F /* Info.plist */,
 				28A5896321928691005FF14F /* ConversationsTableViewController.swift */,
+				285181CF21AA39B400289CB9 /* NewConversationTableViewController.swift */,
 				28A58965219286BE005FF14F /* CustomTableViewCell.swift */,
 				28793130219420D900C93DF6 /* User.swift */,
 				287931322194C28600C93DF6 /* LoginViewController.swift */,
@@ -468,6 +471,7 @@
 				BBF4474D21A3F97500FA3BCB /* MessageVC.swift in Sources */,
 				285ECDD92197ADF300C59F2D /* RegisterViewController.swift in Sources */,
 				28A5893621928647005FF14F /* AppDelegate.swift in Sources */,
+				285181D021AA39B400289CB9 /* NewConversationTableViewController.swift in Sources */,
 				28793135219503B700C93DF6 /* UserDefaults+Handlers.swift in Sources */,
 				284BB9B421A4D3E80029850A /* Authorization.swift in Sources */,
 				287931332194C28600C93DF6 /* LoginViewController.swift in Sources */,

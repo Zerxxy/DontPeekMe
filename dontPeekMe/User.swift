@@ -11,10 +11,11 @@ import Foundation
 class User {
     var email: String
     var phoneNumber: String
+    var uid: String
     
-    init(email: String, phoneNumber: String) {
+    init(email: String, phoneNumber: String, uid: String) {
         self.email = email
         self.phoneNumber = phoneNumber
+        self.uid = uid
     }
 }
-
