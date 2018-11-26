@@ -128,6 +128,11 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     //action for pressing send button
     //will send snapshot of message to Firebase
     @IBAction func sendPressed(_ sender: AnyObject) {
+        dissKeyboard()
         
+        //this will send message into the database
+        if (messageField.text != nil && messageField.text != "") {
+            
+        }
     }
 }
