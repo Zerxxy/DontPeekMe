@@ -115,8 +115,9 @@ class ConversationsTableViewController: UITableViewController {
                         let lastMap = conversation.lastObject as! [String:String]
                         let lastMessage = lastMap[Array(lastMap.keys)[0]] as! String
                         cell.messageLabel.text = lastMessage
-                        cell.nameLabel.text = documentData?["Name"] as! String
-                    } else {
+                        let name = documentData?["Name"] as! String
+                        cell.nameLabel.text = name
+                        cell.thumbnailImageView.setImageForName(name, backgroundColor: nil, circular: true, textAttributes: nil, gradient: true)                    } else {
                         print("Document does not exist")
                     }
                 }
@@ -126,7 +127,7 @@ class ConversationsTableViewController: UITableViewController {
         }
         cell.messageLabel.text = testConversation
         cell.messageLabel.sizeToFit()
-        cell.thumbnailImageView.setImageForName(cellName, backgroundColor: nil, circular: true, textAttributes: nil, gradient: true)
+
         if isBlurred{
             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
             let blurView = UIVisualEffectView(effect: blurEffect)
