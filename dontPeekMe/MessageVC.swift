@@ -41,10 +41,13 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 //        }
         loadData(currentUser: "Warren", recipient: "Bob")
         
-        NotificationCenter.default.addObserver(self, selector: #selector(MessageVC.keyboardWillShow),
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(MessageVC.keyboardWillHide),
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dissKeyboard))
+        view.addGestureRecognizer(tap)
         
         //moves the view of the table to the bottom where the newest messages will be
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
@@ -54,16 +57,31 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     //shows the keyboard
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-                self.textView.frame.origin.y -= keyboardSize.height
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue {
+            let keyboardRect = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRect.height
+            self.textView.frame.origin.y -= keyboardHeight
+            print(keyboardHeight)
         }
     }
     
     //hides the keyboard
     @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-                self.textView.frame.origin.y += keyboardSize.height
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue {
+            let keyboardRect = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRect.height
+            self.textView.frame.origin.y += keyboardHeight
+            print(keyboardHeight)
         }
+    }
+    
+    @objc func dissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
