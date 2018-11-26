@@ -106,16 +106,16 @@ class ConversationsTableViewController: UITableViewController {
         // Configure the cell...
         
         let cellName = conversationNames[indexPath.row]
-        cell.nameLabel.text = cellName
         Auth.auth().addStateDidChangeListener { auth, user in
             if let user = user{
-                self.db.collection("Users").document(user.uid).collection("Conversations").document(cell.nameLabel.text!).getDocument {(document, error) in
+                self.db.collection("Users").document(user.uid).collection("Conversations").document(cellName).getDocument {(document, error) in
                     if let document = document, document.exists {
                         let documentData = document.data()
                         let conversation = documentData?["Conversation"] as! NSArray
                         let lastMap = conversation.lastObject as! [String:String]
                         let lastMessage = lastMap[Array(lastMap.keys)[0]] as! String
                         cell.messageLabel.text = lastMessage
+                        cell.nameLabel.text = documentData?["Name"] as! String
                     } else {
                         print("Document does not exist")
                     }
