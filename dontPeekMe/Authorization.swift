@@ -46,6 +46,7 @@ class Authorization{
                 self.handleFirebaseError(error: error! as NSError, onComplete: onComplete)
             }
             else{
+                print("THE USER HAS BEEN SIGNED IN")
                 onComplete?(nil, user)
             }
         }
@@ -66,7 +67,7 @@ class Authorization{
             }
             else{
                 let uid = authResult?.user.uid
-                self.db.collection("Users").document(uid!).setData(["PhoneNumber": phoneNumber, "Email": email, "Conversations": []])
+                self.db.collection("Users").document(uid!).setData(["PhoneNumber": phoneNumber, "Conversations": []])
                 onComplete?(nil, authResult)
             }
         }

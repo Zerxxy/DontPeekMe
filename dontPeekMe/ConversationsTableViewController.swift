@@ -15,7 +15,7 @@ import FirebaseAuth
 class ConversationsTableViewController: UITableViewController {
     private var roundButton = UIButton()
     private var isBlurred = true
-    var conversationNames = ["Neil Warren", "Addison", "Warren"]
+    var conversationNames = [] as [String]
     var testConversation = "This is a test conversation to see if text wrapping works correctly.  The text message preview should be able to show 3 lines of text before cutting off."
         var db: Firestore!
     override func viewDidLoad() {
@@ -25,24 +25,25 @@ class ConversationsTableViewController: UITableViewController {
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         db = Firestore.firestore()
-        db.collection("User").document("test").getDocument {(document, error) in
-            if let document = document, document.exists {
-                let documentData = document.data()
-                self.conversationNames = documentData?["Conversations"] as! [String]
-            } else {
-                print("Document does not exist")
-            }
-        }
-        let userTest = db.collection("Users").whereField("PhoneNumber", isEqualTo: "1231231")
-        userTest.getDocuments() { (querySnapshot, err) in
-            if let err = err{
-                print("Error")
-            } else {
-                for document in (querySnapshot!.documents){
-                    print(document.documentID)
+        //let userid = Auth.auth().currentUser!.uid
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user{
+                self.db.collection("Users").document(user.uid).getDocument {(document, error) in
+                    if let document = document, document.exists {
+                        let documentData = document.data()
+                        self.conversationNames = documentData?["Conversations"] as! [String]
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    } else {
+                        print("Document does not exist")
+                    }
                 }
+            } else {
+                self.signOut()
             }
         }
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -106,6 +107,23 @@ class ConversationsTableViewController: UITableViewController {
         
         let cellName = conversationNames[indexPath.row]
         cell.nameLabel.text = cellName
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user{
+                self.db.collection("Users").document(user.uid).collection("Conversations").document(cell.nameLabel.text!).getDocument {(document, error) in
+                    if let document = document, document.exists {
+                        let documentData = document.data()
+                        let conversation = documentData?["Conversation"] as! NSArray
+                        let lastMap = conversation.lastObject as! [String:String]
+                        let lastMessage = lastMap[Array(lastMap.keys)[0]] as! String
+                        cell.messageLabel.text = lastMessage
+                    } else {
+                        print("Document does not exist")
+                    }
+                }
+            } else {
+                self.signOut()
+            }
+        }
         cell.messageLabel.text = testConversation
         cell.messageLabel.sizeToFit()
         cell.thumbnailImageView.setImageForName(cellName, backgroundColor: nil, circular: true, textAttributes: nil, gradient: true)
