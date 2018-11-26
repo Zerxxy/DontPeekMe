@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 import FirebaseFirestore
 
 class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
@@ -23,7 +24,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     var message: Message!
     var messages = [Message]()
-    
+    var db: Firestore!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,7 +35,9 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 300
-        
+        let settings = FirestoreSettings()
+        Firestore.firestore().settings = settings
+        db = Firestore.firestore()
         //use this when we segue currentUser and recipient data from conversationController
 //        if currentUser != "" && currentUser != nil && recipient != "" && recipient != nil {
 //            loadData(currentUser: currentUser, recipient: recipient)
@@ -110,11 +113,27 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func loadData(currentUser: String, recipient: String) {
         self.currentUser = currentUser
         self.recipient = recipient
-        messages = [Message(message: "Hi", sender: "Warren"),
-                    Message(message: "Wassup?", sender: "Bob"),
-                    Message(message: "What u up to?", sender: "Warren"),
-                    Message(message: "Nothing much you?", sender: "Bob"),
-                    Message(message: "Wanna go get some food. I've been really craving Thai food", sender: "Warren")]
+        let messages = [] as! NSMutableArray
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user{
+                self.db.collection("Users").document(user.uid).collection("Conversations").document(recipient).getDocument {(document, error) in
+                    if let document = document, document.exists {
+                        let documentData = document.data()
+                        let conversation = documentData?["Conversation"] as! NSArray
+                        for message in conversation{
+                            let lastMap = message as! [String:String]
+                            let Sender = Array(lastMap.keys)[0]
+                            let lastMessage = lastMap[Sender] as! String
+                            messages.add(Message(message:lastMessage,sender: Sender))
+                        }
+                        
+                    } else {
+                        print("Document does not exist")
+                    }
+                }
+            } else {
+            }
+        }
     }
     
     //scrolls the view to the bottom
