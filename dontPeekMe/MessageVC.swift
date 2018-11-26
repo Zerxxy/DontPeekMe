@@ -148,10 +148,24 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     //will send snapshot of message to Firebase
     @IBAction func sendPressed(_ sender: AnyObject) {
         dissKeyboard()
-        
-        //this will send message into the database
         if (messageField.text != nil && messageField.text != "") {
-            
-        }
+            Auth.auth().addStateDidChangeListener { auth, user in
+                if let user = user{
+                    self.db.collection("Users").document(user.uid).collection("Conversations").document(self.recipient).getDocument {(document, error) in
+                        if let document = document, document.exists {
+                            let documentData = document.data()
+                            let conversation = documentData?["Conversation"] as! NSMutableArray
+                            let newMessage = [user.uid: self.messageField.text]
+                            conversation.add(newMessage)
+self.db.collection("Users").document(user.uid).collection("Conversations").document(self.recipient).updateData(["Conversation" : newMessage])
+self.db.collection("Users").document(self.recipient).collection("Conversations").document(user.uid).updateData(["Conversation" : newMessage])
+                            
+                        } else {
+                            print("Document does not exist")
+                        }
+                    }
+                } else {
+                }
+            }        }
     }
 }
