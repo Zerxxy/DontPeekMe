@@ -41,13 +41,18 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         db.collection("Users").document(uid).getDocument {(document, error) in
             if let document = document, document.exists {
                 let documentData = document.data()
-                print("HERHERHE", documentData)
                 let name = documentData!["Name"]
                 self.title = name as! String
             } else {
                 print("Document does not exist")
             }
-        }        //use this when we segue currentUser and recipient data from conversationController
+        }
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user{
+                self.loadData(currentUser: user.uid, recipient: uid)
+            }
+        }
+        //use this when we segue currentUser and recipient data from conversationController
 //        if currentUser != "" && currentUser != nil && recipient != "" && recipient != nil {
 //            loadData(currentUser: currentUser, recipient: recipient)
 //        }
@@ -122,7 +127,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func loadData(currentUser: String, recipient: String) {
         self.currentUser = currentUser
         self.recipient = recipient
-        let messages = [] as! NSMutableArray
+        var messages = [] as! [Message]
         Auth.auth().addStateDidChangeListener { auth, user in
             if let user = user{
                 self.db.collection("Users").document(user.uid).collection("Conversations").document(recipient).getDocument {(document, error) in
@@ -133,9 +138,8 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                             let lastMap = message as! [String:String]
                             let Sender = Array(lastMap.keys)[0]
                             let lastMessage = lastMap[Sender] as! String
-                            messages.add(Message(message:lastMessage,sender: Sender))
+                            messages.append(Message(message:lastMessage,sender: Sender))
                         }
-                        
                     } else {
                         print("Document does not exist")
                     }
