@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var fullNameField: UITextField!
     @IBOutlet weak var registerUsernameField: UITextField!
     @IBOutlet weak var registerPasswordField: UITextField!
     @IBOutlet weak var repeatedPasswordField: UITextField!
@@ -41,11 +42,13 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         registerButton.setGradientBackground(topColor: buttonTopColor, bottomColor: buttonBottomColor)
         
         // Set the custom text fields
+        fullNameField.addUnderLine(lineColor: textColor)
         registerUsernameField.addUnderLine(lineColor: textColor)
         registerPasswordField.addUnderLine(lineColor: textColor)
         repeatedPasswordField.addUnderLine(lineColor: textColor)
         phoneNumberField.addUnderLine(lineColor: textColor)
         
+        self.fullNameField.delegate = self
         self.registerUsernameField.delegate = self
         self.registerPasswordField.delegate = self
         self.repeatedPasswordField.delegate = self
@@ -76,10 +79,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func attemptRegister(_ sender: Any) {
+        let fullName = fullNameField.text!
         let email = registerUsernameField.text!
         let password = registerPasswordField.text!
         let phoneNumber = phoneNumberField.text!
-        Authorization.instance.register(email: email, password: password, phoneNumber: phoneNumber) { (errMsg, data) in
+        Authorization.instance.register(fullName: fullName, email: email, password: password, phoneNumber: phoneNumber) { (errMsg, data) in
             guard errMsg == nil else{
                 let alert = UIAlertController(title: "Error Authentication", message: errMsg, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))

@@ -60,14 +60,14 @@ class Authorization{
      - Parameter onComplete: completion block to store either error string
                  or user data
      */
-    func register(email: String, password: String, phoneNumber: String, onComplete: Completion?){
+    func register(fullName: String, email: String, password: String, phoneNumber: String, onComplete: Completion?){
         Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
             if error != nil{
                 self.handleFirebaseError(error: error! as NSError, onComplete: onComplete)
             }
             else{
                 let uid = authResult?.user.uid
-                self.db.collection("Users").document(uid!).setData(["PhoneNumber": phoneNumber, "Conversations": []])
+                self.db.collection("Users").document(uid!).setData(["Email": email, "Name": fullName, "PhoneNumber": phoneNumber, "Conversations": []])
                 onComplete?(nil, authResult)
             }
         }
