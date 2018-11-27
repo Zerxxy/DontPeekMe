@@ -44,7 +44,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             if let document = document, document.exists {
                 let documentData = document.data()
                 let name = documentData!["Name"]
-                self.title = name as! String
+                self.title = name as? String
             } else {
                 print("Document does not exist")
             }
@@ -129,7 +129,6 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func loadData(currentUser: String, recipient: String) {
         self.currentUser = currentUser
         self.recipient = recipient
-        var Convomessages = [] as! [Message]
         Auth.auth().addStateDidChangeListener { auth, user in
             if let user = user{
                 self.db.collection("Users").document(user.uid).collection("Conversations").document(recipient).getDocument {(document, error) in
@@ -140,7 +139,10 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                             let lastMap = message as! [String:String]
                             let Sender = Array(lastMap.keys)[0]
                             let lastMessage = lastMap[Sender] as! String
-                            Convomessages.append(Message(message:lastMessage,sender: Sender))
+                            self.messages.append(Message(message:lastMessage,sender: Sender))
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
                         }
                     } else {
                         print("Document does not exist")
@@ -149,8 +151,6 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             } else {
             }
         }
-        self.messages = Convomessages
-        
     }
     
     //scrolls the view to the bottom
@@ -172,17 +172,23 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                         if let document = document, document.exists {
                             let documentData = document.data()
                             let conversation = documentData?["Conversation"] as! NSMutableArray
-                            let newMessage = [user.uid: self.messageField.text]
+                            let textMessage = self.messageField.text
+                            let newMessage = [user.uid: textMessage]
                             conversation.add(newMessage)
-self.db.collection("Users").document(user.uid).collection("Conversations").document(self.recipient).updateData(["Conversation" : newMessage])
-self.db.collection("Users").document(self.recipient).collection("Conversations").document(user.uid).updateData(["Conversation" : newMessage])
-                            
+                            self.db.collection("Users").document(user.uid).collection("Conversations").document(self.recipient).updateData(["Conversation" : conversation])
+                            self.db.collection("Users").document(self.recipient).collection("Conversations").document(user.uid).updateData(["Conversation" : conversation])
+                            self.messages.append(Message(message: textMessage!, sender: user.uid))
+                            self.messageField.text = ""
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
                         } else {
                             print("Document does not exist")
                         }
                     }
                 } else {
                 }
-            }        }
+            }
+        }
     }
 }

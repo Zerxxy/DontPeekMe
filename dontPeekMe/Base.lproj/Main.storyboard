@@ -98,10 +98,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qUf-A0-vyy">
-                                                    <rect key="frame" x="8" y="8" width="16" height="53.5"/>
+                                                    <rect key="frame" x="8" y="8" width="193" height="53.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tzr-jt-SQK">
-                                                            <rect key="frame" x="8" y="8" width="0.0" height="37.5"/>
+                                                            <rect key="frame" x="8" y="8" width="177" height="37.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -172,6 +172,9 @@
                                         <state key="normal" title="Send">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="sendPressed:" destination="iFb-ZH-bBL" eventType="touchUpInside" id="Raw-6Q-wWa"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.13468170166015625" green="0.32944715023040771" blue="0.61179548501968384" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -200,7 +203,7 @@
                     </view>
                     <connections>
                         <outlet property="messageField" destination="5T0-NJ-7sJ" id="qR2-x8-yud"/>
-                        <outlet property="sendButton" destination="wsN-Pm-WsV" id="8cr-q8-myX"/>
+                        <outlet property="sendButton" destination="wsN-Pm-WsV" id="bBZ-gt-Igk"/>
                         <outlet property="tableView" destination="4Io-hP-srS" id="UgN-Ya-iQ6"/>
                         <outlet property="textView" destination="G0f-Ka-wLd" id="IEC-hW-CfM"/>
                     </connections>
