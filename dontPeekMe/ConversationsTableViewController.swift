@@ -126,7 +126,6 @@ class ConversationsTableViewController: UITableViewController {
             }
         }
         cell.messageLabel.text = testConversation
-        cell.messageLabel.sizeToFit()
 
         if isBlurred{
             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
@@ -145,6 +144,24 @@ class ConversationsTableViewController: UITableViewController {
         return cell
     }
 
+    /**
+     Prepares for cell selection, passes recipient UID
+     - Parameter segue: The segue object containing information about
+                 the view controllers involved in the segue.
+     - Parameter sender: The object that initiated the segue. You might
+                 use this parameter to perform different actions based
+                 on which control (or other object) initiated the segue.
+     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showMessages"){
+            let messageVC = segue.destination as! MessageVC
+            let indexPath = tableView.indexPathForSelectedRow
+            let recipient = conversationNames[(indexPath?.row)!]
+            messageVC.recipient = recipient
+        }
+    }
+
+    
     func createFloatingButton() {
         let buttonColor = UIColor(red: 229/255, green: 168/255, blue: 35/255, alpha: 1.0)
         roundButton = UIButton(type: .custom)
@@ -180,15 +197,7 @@ class ConversationsTableViewController: UITableViewController {
             self.roundButton.layer.add(pulseAnimation, forKey: "scale")
         }
     }
-    
-    func deleteFloatingButton(){
-        if roundButton.superview != nil {
-            DispatchQueue.main.async {
-                self.roundButton.removeFromSuperview()
-                //self.roundButton = nil
-            }
-        }
-    }
+
     @objc func attemptMessageUnlock(){
         /*
         let alertController = UIAlertController(title: "Reveal Messages", message: "Incomplete function, will implement later", preferredStyle: UIAlertController.Style.alert)
@@ -220,13 +229,13 @@ class ConversationsTableViewController: UITableViewController {
     func unblurMessages(){
         isBlurred = false;
         DispatchQueue.main.async {
-            self.deleteFloatingButton()
+            self.roundButton.isHidden = true
             self.tableView.reloadData()
         }
         let delayTime = 5
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delayTime)){
             self.isBlurred = true;
-            self.createFloatingButton()
+            self.roundButton.isHidden = false
             self.tableView.reloadData()
         }
     }

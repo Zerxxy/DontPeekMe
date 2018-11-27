@@ -28,6 +28,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = recipient
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -42,7 +43,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 //        if currentUser != "" && currentUser != nil && recipient != "" && recipient != nil {
 //            loadData(currentUser: currentUser, recipient: recipient)
 //        }
-        loadData(currentUser: "Warren", recipient: "Bob")
+        //loadData(currentUser: "Warren", recipient: "Bob")
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification, object: nil)

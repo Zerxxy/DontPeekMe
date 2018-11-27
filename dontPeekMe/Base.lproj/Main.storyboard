@@ -63,7 +63,7 @@
                                     <outlet property="messageLabel" destination="5xp-aN-SU9" id="PTe-rK-X4Q"/>
                                     <outlet property="nameLabel" destination="3zo-iQ-LNT" id="h0T-nR-ktL"/>
                                     <outlet property="thumbnailImageView" destination="dvW-wH-oQM" id="ih2-Ck-uQN"/>
-                                    <segue destination="iFb-ZH-bBL" kind="show" id="QIW-j4-FTn"/>
+                                    <segue destination="iFb-ZH-bBL" kind="show" identifier="showMessages" id="QIW-j4-FTn"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -202,6 +202,7 @@
                         <outlet property="messageField" destination="5T0-NJ-7sJ" id="qR2-x8-yud"/>
                         <outlet property="sendButton" destination="wsN-Pm-WsV" id="8cr-q8-myX"/>
                         <outlet property="tableView" destination="4Io-hP-srS" id="UgN-Ya-iQ6"/>
+                        <outlet property="textView" destination="G0f-Ka-wLd" id="IEC-hW-CfM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="32F-3d-rjp" userLabel="First Responder" sceneMemberID="firstResponder"/>
