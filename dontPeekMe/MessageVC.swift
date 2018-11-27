@@ -25,7 +25,9 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var message: Message!
     var messages = [Message]()
     var db: Firestore!
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
@@ -127,7 +129,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func loadData(currentUser: String, recipient: String) {
         self.currentUser = currentUser
         self.recipient = recipient
-        var messages = [] as! [Message]
+        var Convomessages = [] as! [Message]
         Auth.auth().addStateDidChangeListener { auth, user in
             if let user = user{
                 self.db.collection("Users").document(user.uid).collection("Conversations").document(recipient).getDocument {(document, error) in
@@ -138,7 +140,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                             let lastMap = message as! [String:String]
                             let Sender = Array(lastMap.keys)[0]
                             let lastMessage = lastMap[Sender] as! String
-                            messages.append(Message(message:lastMessage,sender: Sender))
+                            Convomessages.append(Message(message:lastMessage,sender: Sender))
                         }
                     } else {
                         print("Document does not exist")
@@ -147,6 +149,8 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             } else {
             }
         }
+        self.messages = Convomessages
+        
     }
     
     //scrolls the view to the bottom
