@@ -27,8 +27,6 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var db: Firestore!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.title = recipient
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -39,7 +37,17 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         db = Firestore.firestore()
-        //use this when we segue currentUser and recipient data from conversationController
+        let uid = recipient!
+        db.collection("Users").document(uid).getDocument {(document, error) in
+            if let document = document, document.exists {
+                let documentData = document.data()
+                print("HERHERHE", documentData)
+                let name = documentData!["Name"]
+                self.title = name as! String
+            } else {
+                print("Document does not exist")
+            }
+        }        //use this when we segue currentUser and recipient data from conversationController
 //        if currentUser != "" && currentUser != nil && recipient != "" && recipient != nil {
 //            loadData(currentUser: currentUser, recipient: recipient)
 //        }
