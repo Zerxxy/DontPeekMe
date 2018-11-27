@@ -11,6 +11,7 @@ import UIKit
 class NewConversationTableViewController: UITableViewController, UISearchResultsUpdating {
     var users = [User]()
     var filteredUsers = [User]()
+    var conversationViewController: ConversationsTableViewController?
     
     let cellID = "CellID"
     let searchController = UISearchController(searchResultsController: nil)
@@ -50,6 +51,18 @@ class NewConversationTableViewController: UITableViewController, UISearchResults
         cell.detailTextLabel?.text = user?.email
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let user : User?
+        if (searchController.isActive && searchController.searchBar.text != ""){
+            user = filteredUsers[indexPath.row]
+        } else {
+            user = users[indexPath.row]
+        }
+        conversationViewController?.recipient = user?.uid
+        dismiss(animated: true, completion: nil)
+        conversationViewController?.performSegue(withIdentifier: "showMessages", sender: nil)
     }
     
     func updateSearchResults(for searchController: UISearchController) {

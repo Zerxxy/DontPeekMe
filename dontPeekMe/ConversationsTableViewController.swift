@@ -16,8 +16,9 @@ class ConversationsTableViewController: UITableViewController {
     private var roundButton = UIButton()
     private var isBlurred = true
     var conversationNames = [] as [String]
-    var testConversation = "This is a test conversation to see if text wrapping works correctly.  The text message preview should be able to show 3 lines of text before cutting off."
-        var db: Firestore!
+    var currentUserName: String!
+    var recipient: String?
+    var db: Firestore!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorInset = UIEdgeInsets.zero
@@ -32,6 +33,7 @@ class ConversationsTableViewController: UITableViewController {
                     if let document = document, document.exists {
                         let documentData = document.data()
                         self.conversationNames = documentData?["Conversations"] as! [String]
+                        self.currentUserName = documentData?["Name"] as? String
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
@@ -76,6 +78,7 @@ class ConversationsTableViewController: UITableViewController {
     
     @objc func handleNewConversation() {
         let newConversationController = NewConversationTableViewController()
+        newConversationController.conversationViewController = self
         let navController = UINavigationController(rootViewController: newConversationController)
         present(navController, animated: true, completion: nil)
     }
@@ -125,7 +128,6 @@ class ConversationsTableViewController: UITableViewController {
                 self.signOut()
             }
         }
-        cell.messageLabel.text = testConversation
 
         if isBlurred{
             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
@@ -143,7 +145,12 @@ class ConversationsTableViewController: UITableViewController {
 
         return cell
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.recipient = conversationNames[indexPath.row]
+        performSegue(withIdentifier: "showMessages", sender: self)
+    }
+    
     /**
      Prepares for cell selection, passes recipient UID
      - Parameter segue: The segue object containing information about
@@ -155,9 +162,8 @@ class ConversationsTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showMessages"){
             let messageVC = segue.destination as! MessageVC
-            let indexPath = tableView.indexPathForSelectedRow
-            let recipient = conversationNames[(indexPath?.row)!]
-            messageVC.recipient = recipient
+            messageVC.recipient = self.recipient
+            messageVC.currentUserName = self.currentUserName
         }
     }
 

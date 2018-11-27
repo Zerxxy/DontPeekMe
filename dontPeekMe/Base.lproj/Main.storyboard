@@ -63,7 +63,6 @@
                                     <outlet property="messageLabel" destination="5xp-aN-SU9" id="PTe-rK-X4Q"/>
                                     <outlet property="nameLabel" destination="3zo-iQ-LNT" id="h0T-nR-ktL"/>
                                     <outlet property="thumbnailImageView" destination="dvW-wH-oQM" id="ih2-Ck-uQN"/>
-                                    <segue destination="iFb-ZH-bBL" kind="show" identifier="showMessages" id="QIW-j4-FTn"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -73,6 +72,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="dontPeekMe" id="Eh1-lY-e8z"/>
+                    <connections>
+                        <segue destination="iFb-ZH-bBL" kind="show" identifier="showMessages" id="eVp-o3-Jqh"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qra-hF-qnm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

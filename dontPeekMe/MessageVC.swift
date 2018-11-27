@@ -20,11 +20,14 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     //segue current user and recipient collection id for FireBase
     var currentUser: String!
+    var currentUserName: String!
     var recipient: String!
+    var recipientUserName: String!
     
     var message: Message!
     var messages = [Message]()
     var db: Firestore!
+    let semaphore = DispatchSemaphore(value: 0)
     
     override func viewDidLoad() {
         
@@ -40,13 +43,18 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         Firestore.firestore().settings = settings
         db = Firestore.firestore()
         let uid = recipient!
-        db.collection("Users").document(uid).getDocument {(document, error) in
-            if let document = document, document.exists {
-                let documentData = document.data()
-                let name = documentData!["Name"]
-                self.title = name as? String
-            } else {
-                print("Document does not exist")
+        
+        DispatchQueue.global().async {
+            self.db.collection("Users").document(uid).getDocument {(document, error) in
+                if let document = document, document.exists {
+                    let documentData = document.data()
+                    let name = documentData!["Name"]
+                    self.recipientUserName = name as? String
+                    self.title = self.recipientUserName
+                } else {
+                    print("Document does not exist")
+                }
+                self.semaphore.signal()
             }
         }
         Auth.auth().addStateDidChangeListener { auth, user in
@@ -145,7 +153,34 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                             }
                         }
                     } else {
-                        print("Document does not exist")
+                        // Create the new conversation
+                        DispatchQueue.global().async {
+                            self.semaphore.wait()
+                            let emptyConversations = NSArray()
+                            self.db.collection("Users").document(user.uid).getDocument(completion: { (document, error) in
+                                if let document = document, document.exists {
+                                    let documentData = document.data()
+                                    let conversations = documentData?["Conversations"] as! NSMutableArray
+                                    conversations.add(recipient)
+                                    self.db.collection("Users").document(user.uid).updateData(["Conversations": conversations])
+                                }
+                            })
+                            self.db.collection("Users").document(recipient).getDocument(completion: { (document, error) in
+                                if let document = document, document.exists {
+                                    let documentData = document.data()
+                                    let conversations = documentData?["Conversations"] as! NSMutableArray
+                                    conversations.add(user.uid)
+                                    self.db.collection("Users").document(recipient).updateData(["Conversations": conversations])
+                                }
+                            })
+                            self.db.collection("Users").document(user.uid).collection("Conversations").document(recipient).setData([
+                                "Conversation" : emptyConversations,
+                                "Name": self.recipientUserName])
+                            self.db.collection("Users").document(recipient).collection("Conversations").document(user.uid).setData([
+                                "Conversation" : emptyConversations,
+                                "Name": self.currentUserName])
+                            print("Document does not exist, creating document now")
+                        }
                     }
                 }
             } else {
