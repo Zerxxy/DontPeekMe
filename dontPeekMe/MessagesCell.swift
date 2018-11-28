@@ -34,7 +34,7 @@ class MessagesCell: UITableViewCell {
     }
     
     
-    func configCell(message: Message) {
+    func configCell(message: Message, blurred: Bool) {
         self.message = message
         
         if message.sender == currentUser {
@@ -43,13 +43,47 @@ class MessagesCell: UITableViewCell {
             
             recievedMessageLbl.text = ""
             recievedMessageView.isHidden = true
+            
+            if blurred{
+                setBlur(messageView: sentMessageView, tag: 98)
+            } else {
+                removeBlur(messageView: sentMessageView, tag: 98)
+            }
         } else {
             sentMessageView.isHidden = true
             sentMessageLabel.text = ""
             
             recievedMessageLbl.text = message.message
             recievedMessageView.isHidden = false
+            
+            if blurred{
+                setBlur(messageView: recievedMessageView, tag: 98)
+            } else {
+                removeBlur(messageView: recievedMessageView, tag: 98)
+            }
         }
+        
     }
 
+    func setBlur(messageView: UIView, tag: Int){
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        
+        blurView.clipsToBounds = true
+        blurView.layer.cornerRadius = 12
+        blurView.tag = tag
+        
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        messageView.addSubview(blurView)
+        blurView.topAnchor.constraint(equalTo: messageView.topAnchor).isActive = true
+        blurView.trailingAnchor.constraint(equalTo: messageView.trailingAnchor).isActive = true
+        blurView.bottomAnchor.constraint(equalTo: messageView.bottomAnchor).isActive = true
+        blurView.leadingAnchor.constraint(equalTo: messageView.leadingAnchor).isActive = true
+    }
+    
+    func removeBlur(messageView: UIView, tag: Int){
+        if let viewWithTag = messageView.viewWithTag(tag){
+            viewWithTag.removeFromSuperview()
+        }
+    }
 }

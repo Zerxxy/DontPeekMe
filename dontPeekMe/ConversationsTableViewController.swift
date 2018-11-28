@@ -19,6 +19,7 @@ class ConversationsTableViewController: UITableViewController {
     var currentUserName: String!
     var recipient: String?
     var db: Firestore!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorInset = UIEdgeInsets.zero
@@ -56,7 +57,8 @@ class ConversationsTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        createFloatingButton()
+        roundButton.addTarget(self, action: #selector(attemptMessageUnlock), for: UIControl.Event.touchUpInside)
+        setFloatingButton(roundButton: roundButton)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -181,7 +183,7 @@ class ConversationsTableViewController: UITableViewController {
                 keyWindow.addSubview(self.roundButton)
                 NSLayoutConstraint.activate([
                     keyWindow.trailingAnchor.constraint(equalTo: self.roundButton.trailingAnchor, constant: 20),
-                    keyWindow.bottomAnchor.constraint(equalTo: self.roundButton.bottomAnchor, constant: 20),
+                    keyWindow.bottomAnchor.constraint(equalTo: self.roundButton.bottomAnchor, constant: 60),
                     self.roundButton.widthAnchor.constraint(equalToConstant: 50),
                     self.roundButton.heightAnchor.constraint(equalToConstant: 50)])
             }
@@ -205,11 +207,6 @@ class ConversationsTableViewController: UITableViewController {
     }
 
     @objc func attemptMessageUnlock(){
-        /*
-        let alertController = UIAlertController(title: "Reveal Messages", message: "Incomplete function, will implement later", preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        present(alertController, animated: true, completion: nil)
-         */
         let localAuthenticationContext = LAContext()
         localAuthenticationContext.localizedFallbackTitle = "Use Passcode"
         
@@ -223,7 +220,7 @@ class ConversationsTableViewController: UITableViewController {
                     self.unblurMessages()
                 } else {
                     //TODO: User not authenticated
-                    guard let error = evaluateError else {
+                    guard evaluateError != nil else {
                         return
                     }
                     print("Will customize error later")

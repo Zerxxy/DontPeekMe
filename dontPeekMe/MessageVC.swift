@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
+import LocalAuthentication
 
 class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
@@ -24,6 +25,8 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var recipient: String!
     var recipientUserName: String!
     
+    private var roundButton = UIButton()
+    var isBlurred = true
     var message: Message!
     var messages = [Message]()
     var db: Firestore!
@@ -88,6 +91,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             let keyboardRect = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRect.height
             self.textView.frame.origin.y -= keyboardHeight
+            self.roundButton.frame.origin.y -= keyboardHeight
             print(keyboardHeight)
         }
     }
@@ -98,6 +102,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             let keyboardRect = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRect.height
             self.textView.frame.origin.y += keyboardHeight
+            self.roundButton.frame.origin.y += keyboardHeight
             print(keyboardHeight)
         }
     }
@@ -106,9 +111,21 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         view.endEditing(true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        roundButton.addTarget(self, action: #selector(attemptMessageUnlock), for: UIControl.Event.touchUpInside)
+        setFloatingButton(roundButton: roundButton)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        if roundButton.superview != nil {
+            DispatchQueue.main.async {
+                self.roundButton.removeFromSuperview()
+                //self.roundButton = nil
+            }
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -125,7 +142,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Message") as? MessagesCell {
             cell.currentUser = self.currentUser
-            cell.configCell(message: message)
+            cell.configCell(message: message, blurred: isBlurred)
             return cell
         } else {
             return MessagesCell()
@@ -224,6 +241,43 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 } else {
                 }
             }
+        }
+    }
+    
+    @objc func attemptMessageUnlock(){
+        let localAuthenticationContext = LAContext()
+        localAuthenticationContext.localizedFallbackTitle = "Use Passcode"
+        
+        var authError: NSError?
+        let reasonString = "To prove your identity"
+        
+        if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError){
+            localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonString){ success, evaluateError in
+                if success{
+                    //TODO: User authenticated
+                    self.unblurMessages()
+                } else {
+                    //TODO: User not authenticated
+                    guard evaluateError != nil else {
+                        return
+                    }
+                    print("Will customize error later")
+                }
+            }
+        }
+    }
+    
+    func unblurMessages(){
+        isBlurred = false;
+        DispatchQueue.main.async {
+            self.roundButton.isHidden = true
+            self.tableView.reloadData()
+        }
+        let delayTime = 5
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delayTime)){
+            self.isBlurred = true;
+            self.roundButton.isHidden = false
+            self.tableView.reloadData()
         }
     }
 }
