@@ -233,7 +233,6 @@
                                 </state>
                                 <connections>
                                     <action selector="attemptLogin:" destination="Xxj-cq-4La" eventType="touchUpInside" id="aLA-Dy-vfm"/>
-                                    <segue destination="LfD-xJ-oXC" kind="show" identifier="showConversations" id="hga-Wi-IDY"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7YZ-mv-rl8">
@@ -349,6 +348,7 @@
                         <outlet property="passwordField" destination="7YZ-mv-rl8" id="mCB-qp-cbr"/>
                         <outlet property="signUpButton" destination="fjW-gC-lnG" id="6p9-4R-F8z"/>
                         <outlet property="usernameField" destination="RZq-tM-Cya" id="7AJ-wA-RDc"/>
+                        <segue destination="LfD-xJ-oXC" kind="show" identifier="showConversations" id="3Zi-Qy-mcL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YVF-RV-OQb" userLabel="First Responder" sceneMemberID="firstResponder"/>

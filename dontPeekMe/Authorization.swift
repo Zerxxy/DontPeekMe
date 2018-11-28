@@ -89,7 +89,7 @@ class Authorization{
                 for document in (querySnapshot!.documents){
                     let data = document.data()
                     let uid = document.documentID
-                    let u = User(email: data["Email"] as! String, phoneNumber: phoneNumber, uid: uid)
+                    let u = User(userName: data["Name"] as! String, email: data["Email"] as! String, phoneNumber: phoneNumber, uid: uid)
                     users.append(u)
                 }
                 onComplete?(nil, users as AnyObject)
@@ -113,7 +113,7 @@ class Authorization{
                 for document in (querySnapshot!.documents){
                     let data = document.data()
                     let uid = document.documentID
-                    let u = User(email: data["Email"] as! String, phoneNumber: data["PhoneNumber"] as! String, uid: uid)
+                    let u = User(userName: data["Name"] as! String, email: data["Email"] as! String, phoneNumber: data["PhoneNumber"] as! String, uid: uid)
                     users.append(u)
                 }
                 onComplete?(nil, users as AnyObject)

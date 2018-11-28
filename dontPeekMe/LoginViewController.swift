@@ -58,7 +58,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    // Incomplete, will replace segue with this later
     @IBAction func attemptLogin(_ sender: Any) {
         let uName = usernameField.text!
         let pWord = passwordField.text!

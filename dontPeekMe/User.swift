@@ -12,8 +12,10 @@ class User {
     var email: String
     var phoneNumber: String
     var uid: String
+    var userName: String
     
-    init(email: String, phoneNumber: String, uid: String) {
+    init(userName: String, email: String, phoneNumber: String, uid: String) {
+        self.userName = userName
         self.email = email
         self.phoneNumber = phoneNumber
         self.uid = uid

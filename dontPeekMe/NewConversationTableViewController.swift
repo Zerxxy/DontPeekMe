@@ -61,6 +61,7 @@ class NewConversationTableViewController: UITableViewController, UISearchResults
             user = users[indexPath.row]
         }
         conversationViewController?.recipient = user?.uid
+        conversationViewController?.recipientUserName = user?.userName
         dismiss(animated: true, completion: nil)
         conversationViewController?.performSegue(withIdentifier: "showMessages", sender: nil)
     }
