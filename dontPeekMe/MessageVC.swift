@@ -55,7 +55,15 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         messageField.layer.cornerRadius = 8
         messageField.clipsToBounds = true
         
-        title = recipientUserName
+        if recipientUserName == nil{
+            db.collection("Users").document(recipient).getDocument { (document, error) in
+                if let document = document, document.exists{
+                    self.title = document["Name"] as! String
+                }
+            }
+        } else {
+            title = recipientUserName
+        }
         
         currentUser = Auth.auth().currentUser?.uid  //gets current user uid
         
@@ -95,14 +103,16 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             if let document = document, document.exists {
                 let documentData = document.data()
                 let conversation = documentData?["Conversation"] as! NSArray
-                for message in conversation {
-                    let map = message as! [String:String]
-                    let sender = Array(map.keys)[0]
-                    let message = map[sender]
-                    self.messages.append(Message(message: message, sender: sender))
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                if conversation.count > 0{
+                    for message in conversation {
+                        let map = message as! [String:String]
+                        let sender = Array(map.keys)[0]
+                        let message = map[sender]
+                        self.messages.append(Message(message: message, sender: sender))
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
             }
             
@@ -119,13 +129,15 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             }
             let documentData = snapshot.data()
             let conversation = documentData?["Conversation"] as! NSArray
-            let recentMessage = conversation[conversation.count-1]
-            let map = recentMessage as! [String:String]
-            let sender = Array(map.keys)[0]
-            let message = map[sender]
-            self.messages.append(Message(message: message, sender: sender))
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            if conversation.count > 0{
+                let recentMessage = conversation[conversation.count-1]
+                let map = recentMessage as! [String:String]
+                let sender = Array(map.keys)[0]
+                let message = map[sender]
+                self.messages.append(Message(message: message, sender: sender))
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
     }
@@ -141,8 +153,10 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             UIView.animate(withDuration: 0, animations: {
                 self.view.layoutIfNeeded()
             }) { (completed) in
-                let indexPath = NSIndexPath(item: self.messages.count - 1, section: 0)
-                self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+                if(self.messages.count > 0){
+                    let indexPath = NSIndexPath(item: self.messages.count - 1, section: 0)
+                    self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+                }
             }
             
             print(keyboardHeight)
@@ -160,8 +174,10 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             UIView.animate(withDuration: 0, animations: {
                 self.view.layoutIfNeeded()
             }) { (completed) in
-                let indexPath = NSIndexPath(item: self.messages.count - 1, section: 0)
-                self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+                if(self.messages.count > 0){
+                    let indexPath = NSIndexPath(item: self.messages.count - 1, section: 0)
+                    self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+                }
             }
             
             print(keyboardHeight)

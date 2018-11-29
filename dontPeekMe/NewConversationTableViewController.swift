@@ -12,6 +12,8 @@ class NewConversationTableViewController: UITableViewController, UISearchResults
     var users = [User]()
     var filteredUsers = [User]()
     var conversationViewController: ConversationsTableViewController?
+    var currentUser: String?
+    var currentUserName: String?
     
     let cellID = "CellID"
     let searchController = UISearchController(searchResultsController: nil)
@@ -54,16 +56,22 @@ class NewConversationTableViewController: UITableViewController, UISearchResults
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user : User?
+        let recipient : User?
         if (searchController.isActive && searchController.searchBar.text != ""){
-            user = filteredUsers[indexPath.row]
+            recipient = filteredUsers[indexPath.row]
         } else {
-            user = users[indexPath.row]
+            recipient = users[indexPath.row]
         }
-        conversationViewController?.recipient = user?.uid
-        conversationViewController?.recipientUserName = user?.userName
-        dismiss(animated: true, completion: nil)
-        conversationViewController?.performSegue(withIdentifier: "showMessages", sender: nil)
+        conversationViewController?.recipient = recipient?.uid
+        conversationViewController?.recipientUserName = recipient?.userName
+        Authorization.instance.createNewConversation(sender: self.currentUser!, senderName: currentUserName!, recipient: (recipient?.uid)!, recipientName: (recipient?.userName)!) { (error, data) in
+            guard error == nil else {
+                print(error!)
+                return
+            }
+            self.dismiss(animated: true, completion: nil)
+            self.conversationViewController?.performSegue(withIdentifier: "showMessages", sender: nil)
+        }
     }
     
     func updateSearchResults(for searchController: UISearchController) {

@@ -17,6 +17,7 @@ class ConversationsTableViewController: UITableViewController {
     private var isBlurred = true
     var conversationNames = [] as [String]
     var currentUserName: String!
+    var currentUser: String?
     var recipient: String?
     var recipientUserName: String?
     var db: Firestore!
@@ -36,6 +37,7 @@ class ConversationsTableViewController: UITableViewController {
                         let documentData = document.data()
                         self.conversationNames = documentData?["Conversations"] as! [String]
                         self.currentUserName = documentData?["Name"] as? String
+                        self.currentUser = user.uid
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
@@ -83,14 +85,16 @@ class ConversationsTableViewController: UITableViewController {
         present(loginController, animated: true, completion: {
             // Funcitonality to do later?
             // Not sure if this is the correct way of removing the view
-            self.navigationController?.popToRootViewController(animated: false)
-            UIApplication.shared.delegate?.window??.rootViewController = loginController
+            //self.navigationController?.popToRootViewController(animated: false)
+            //UIApplication.shared.delegate?.window??.rootViewController = loginController
         })
     }
     
     @objc func handleNewConversation() {
         let newConversationController = NewConversationTableViewController()
         newConversationController.conversationViewController = self
+        newConversationController.currentUser = self.currentUser
+        newConversationController.currentUserName = self.currentUserName
         let navController = UINavigationController(rootViewController: newConversationController)
         present(navController, animated: true, completion: nil)
     }

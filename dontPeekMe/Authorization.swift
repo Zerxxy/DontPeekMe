@@ -97,6 +97,50 @@ class Authorization{
         }
     }
     
+    func createNewConversation(sender: String, senderName: String, recipient: String, recipientName: String, onComplete: Completion?){
+        let userRef = db.collection("Users")
+        let conversationExists = userRef.document(sender).collection("Conversations").document(recipient)
+        conversationExists.getDocument { (document, err) in
+            if let document = document, document.exists{
+                onComplete?(nil, nil)
+            } else {
+                // We need to create an empty conversation between the two
+                var errMsg: String?
+                self.addConversation(sender: sender, recipient: recipient, recipientName: recipientName, onComplete: { (error, data) in
+                    guard error != nil else{
+                        errMsg = error
+                        return
+                    }
+                })
+                self.addConversation(sender: recipient, recipient: sender, recipientName: senderName, onComplete: { (error, data) in
+                    guard error != nil else{
+                        errMsg = error
+                        return
+                    }
+                })
+                onComplete?(errMsg, nil)
+            }
+        }
+    }
+    
+    func addConversation(sender: String, recipient: String, recipientName: String, onComplete: Completion?){
+        let userRef = db.collection("Users").document(sender)
+        userRef.getDocument { (document, error) in
+            if let document = document, document.exists{
+                let documentData = document.data()
+                let conversations = documentData?["Conversations"] as! NSMutableArray
+                conversations.add(recipient)
+                userRef.updateData(["Conversations" : conversations])
+                userRef.collection("Conversations").document(recipient).setData([
+                    "Conversation" : [],
+                    "Name" : recipientName ?? "errorFindingName"])
+                onComplete?(nil, nil)
+            } else {
+                onComplete?("Error adding to conversation field", nil)
+            }
+        }
+    }
+    
     /**
      Returns all registered users, used when creating new conversations
      
