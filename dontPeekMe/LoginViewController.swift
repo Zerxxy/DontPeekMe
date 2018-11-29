@@ -54,6 +54,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        usernameField.text = ""
+        passwordField.text = ""
+    }
     override open var shouldAutorotate: Bool{
         return false
     }

@@ -47,8 +47,8 @@ class NewConversationTableViewController: UITableViewController, UISearchResults
         } else {
             user = users[indexPath.row]
         }
-        cell.textLabel?.text = user?.phoneNumber
-        cell.detailTextLabel?.text = user?.email
+        cell.textLabel?.text = user?.userName
+        cell.detailTextLabel?.text = user?.phoneNumber
         
         return cell
     }
