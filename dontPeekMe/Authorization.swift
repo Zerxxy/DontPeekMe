@@ -114,7 +114,9 @@ class Authorization{
                     let data = document.data()
                     let uid = document.documentID
                     let u = User(userName: data["Name"] as! String, email: data["Email"] as! String, phoneNumber: data["PhoneNumber"] as! String, uid: uid)
-                    users.append(u)
+                    if(Auth.auth().currentUser?.uid != uid){
+                        users.append(u)
+                    }
                 }
                 onComplete?(nil, users as AnyObject)
             }

@@ -115,6 +115,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 //self.roundButton = nil
             }
         }
+        dismiss(animated: true, completion: nil)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

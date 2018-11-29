@@ -82,6 +82,9 @@ class ConversationsTableViewController: UITableViewController {
         let loginController = storyboard?.instantiateViewController(withIdentifier: "MainNavigation") as! UINavigationController
         present(loginController, animated: true, completion: {
             // Funcitonality to do later?
+            // Not sure if this is the correct way of removing the view
+            self.navigationController?.popToRootViewController(animated: false)
+            UIApplication.shared.delegate?.window??.rootViewController = loginController
         })
     }
     
