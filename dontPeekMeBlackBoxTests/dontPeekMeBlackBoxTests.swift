@@ -1,15 +1,14 @@
 //
-//  dontPeekMeTests.swift
-//  dontPeekMeTests
+//  dontPeekMeBlackBoxTests.swift
+//  dontPeekMeBlackBoxTests
 //
-//  Created by Neil Warren on 11/6/18.
+//  Created by Addison Kauzer on 11/28/18.
 //  Copyright © 2018 Neil Warren. All rights reserved.
 //
 
 import XCTest
-@testable import Pods_dontPeekMe
 
-class dontPeekMeTests: XCTestCase {
+class dontPeekMeBlackBoxTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
