@@ -179,7 +179,7 @@ using leveldb::Status;
   LevelDbDocumentTargetKey key;
   BOOL stop = NO;
   for (; !stop && it->Valid() && absl::StartsWith(it->key(), documentTargetPrefix); it->Next()) {
-    HARD_ASSERT(key.Decode(it->key()), "Failed to decode DocumentTarget key");
+    key.Decode(it->key());
     if (key.IsSentinel()) {
       // if nextToReport is non-zero, report it, this is a new key so the last one
       // must be not be a member of any targets.

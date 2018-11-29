@@ -5,17 +5,19 @@ PODS:
   - BoringSSL/Implementation (10.0.6):
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
-  - Firebase/Auth (5.13.0):
+  - Firebase (5.12.0):
+    - Firebase/Core (= 5.12.0)
+  - Firebase/Auth (5.12.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.5)
-  - Firebase/Core (5.13.0):
+  - Firebase/Core (5.12.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.3.0)
-  - Firebase/CoreOnly (5.13.0):
-    - FirebaseCore (= 5.1.8)
-  - Firebase/Firestore (5.13.0):
+  - Firebase/CoreOnly (5.12.0):
+    - FirebaseCore (= 5.1.7)
+  - Firebase/Firestore (5.12.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (= 0.15.0)
+    - FirebaseFirestore (= 0.14.0)
   - FirebaseAnalytics (5.3.0):
     - FirebaseCore (~> 5.1)
     - FirebaseInstanceID (~> 3.3)
@@ -31,20 +33,22 @@ PODS:
     - GoogleUtilities/Environment (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseAuthInterop (1.0.0)
-  - FirebaseCore (5.1.8):
+  - FirebaseCore (5.1.7):
     - GoogleUtilities/Logger (~> 5.2)
-  - FirebaseFirestore (0.15.0):
+  - FirebaseFirestore (0.14.0):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
-    - FirebaseFirestore/abseil-cpp (= 0.15.0)
+    - FirebaseFirestore/abseil-cpp (= 0.14.0)
     - "gRPC-C++ (~> 0.0.3)"
+    - gRPC-ProtoRPC (~> 1.0)
     - leveldb-library (~> 1.20)
     - nanopb (~> 0.3.8)
     - Protobuf (~> 3.1)
-  - FirebaseFirestore/abseil-cpp (0.15.0):
+  - FirebaseFirestore/abseil-cpp (0.14.0):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
     - "gRPC-C++ (~> 0.0.3)"
+    - gRPC-ProtoRPC (~> 1.0)
     - leveldb-library (~> 1.20)
     - nanopb (~> 0.3.8)
     - Protobuf (~> 3.1)
@@ -58,32 +62,35 @@ PODS:
     - GoogleUtilities/Network (~> 5.2)
     - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - GoogleUtilities/AppDelegateSwizzler (5.3.6):
+  - GoogleUtilities/AppDelegateSwizzler (5.3.5):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (5.3.6)
-  - GoogleUtilities/Logger (5.3.6):
+  - GoogleUtilities/Environment (5.3.5)
+  - GoogleUtilities/Logger (5.3.5):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (5.3.6):
+  - GoogleUtilities/MethodSwizzler (5.3.5):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (5.3.6):
+  - GoogleUtilities/Network (5.3.5):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.3.6)"
-  - GoogleUtilities/Reachability (5.3.6):
+  - "GoogleUtilities/NSData+zlib (5.3.5)"
+  - GoogleUtilities/Reachability (5.3.5):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (5.3.6):
+  - GoogleUtilities/UserDefaults (5.3.5):
     - GoogleUtilities/Logger
-  - "gRPC-C++ (0.0.5)":
-    - "gRPC-C++/Implementation (= 0.0.5)"
-    - "gRPC-C++/Interface (= 0.0.5)"
-  - "gRPC-C++/Implementation (0.0.5)":
-    - "gRPC-C++/Interface (= 0.0.5)"
+  - gRPC (1.14.0):
+    - gRPC-RxLibrary (= 1.14.0)
+    - gRPC/Main (= 1.14.0)
+  - "gRPC-C++ (0.0.3)":
+    - "gRPC-C++/Implementation (= 0.0.3)"
+    - "gRPC-C++/Interface (= 0.0.3)"
+  - "gRPC-C++/Implementation (0.0.3)":
+    - "gRPC-C++/Interface (= 0.0.3)"
     - gRPC-Core (= 1.14.0)
     - nanopb (~> 0.3)
-  - "gRPC-C++/Interface (0.0.5)"
+  - "gRPC-C++/Interface (0.0.3)"
   - gRPC-Core (1.14.0):
     - gRPC-Core/Implementation (= 1.14.0)
     - gRPC-Core/Interface (= 1.14.0)
@@ -92,7 +99,17 @@ PODS:
     - gRPC-Core/Interface (= 1.14.0)
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.14.0)
-  - GTMSessionFetcher/Core (1.2.1)
+  - gRPC-ProtoRPC (1.14.0):
+    - gRPC-ProtoRPC/Main (= 1.14.0)
+  - gRPC-ProtoRPC/Main (1.14.0):
+    - gRPC (= 1.14.0)
+    - gRPC-RxLibrary (= 1.14.0)
+    - Protobuf (~> 3.0)
+  - gRPC-RxLibrary (1.14.0)
+  - gRPC/Main (1.14.0):
+    - gRPC-Core (= 1.14.0)
+    - gRPC-RxLibrary (= 1.14.0)
+  - GTMSessionFetcher/Core (1.2.0)
   - InitialsImageView (0.4.0)
   - leveldb-library (1.20)
   - nanopb (0.3.901):
@@ -103,8 +120,8 @@ PODS:
   - Protobuf (3.6.1)
 
 DEPENDENCIES:
+  - Firebase
   - Firebase/Auth
-  - Firebase/Core
   - Firebase/Firestore
   - InitialsImageView
 
@@ -120,8 +137,11 @@ SPEC REPOS:
     - FirebaseInstanceID
     - GoogleAppMeasurement
     - GoogleUtilities
+    - gRPC
     - "gRPC-C++"
     - gRPC-Core
+    - gRPC-ProtoRPC
+    - gRPC-RxLibrary
     - GTMSessionFetcher
     - InitialsImageView
     - leveldb-library
@@ -130,23 +150,26 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
-  Firebase: 6df9a6114bc9f106a98fe83d5438d4d9833c2019
+  Firebase: 9190018e296139d938b99521cde0c15a6e8d2946
   FirebaseAnalytics: 63202d2665de4e6adcbdce189135255d8b5962ba
   FirebaseAuth: 9299ab178271bec7426967b05b2718bb6fc31f17
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
-  FirebaseCore: fba2bfaa691c49028309b92e4dd37cc4b5512fbe
-  FirebaseFirestore: 9e9411f13a0aba72d4f631899611d09e43734c48
+  FirebaseCore: 027d350adc039aa5483357c6f56556f117c5170e
+  FirebaseFirestore: 6dc97a9685c421767cc96bf644fc963166cddbe7
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   GoogleAppMeasurement: 5029d78f2b438bd30ffb44e6c558b57c21622727
-  GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
-  "gRPC-C++": 19eec1ffd34de29453f5fab5b4697ad0f240ad51
+  GoogleUtilities: bb6ff5a302c97a0bc9820dad775505778c5a2676
+  gRPC: 9d4c549f37c7cef22478634bac7a0405b6e3dbfb
+  "gRPC-C++": ee0b01db3122f0b6c2be28b5b11039f62fa15fe6
   gRPC-Core: f4836515817c0eb479aeeb9cc27c91c4ba62a9f6
-  GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
+  gRPC-ProtoRPC: 76f6053639a842e1fb45fa82aa598bf3f4d9f66f
+  gRPC-RxLibrary: 3c305f32155024b116b780f389323c73a28197e6
+  GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   InitialsImageView: bea137b6281b3a82ccef09327986ec78a1a0da37
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
 
-PODFILE CHECKSUM: f5414790b95666d268df56fd2b330c62c0b2fb5d
+PODFILE CHECKSUM: 2dc8fbfac6362a780319a0b3e4153d225fa229e3
 
 COCOAPODS: 1.5.3

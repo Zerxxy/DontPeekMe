@@ -1,6 +1,0 @@
-framework module Pods_dontPeekMeUITests {
-  umbrella header "Pods-dontPeekMeUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}
