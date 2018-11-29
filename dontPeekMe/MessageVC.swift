@@ -13,7 +13,7 @@ import FirebaseFirestore
 import LocalAuthentication
 
 class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
-
+    
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messageField: UITextView!
     @IBOutlet weak var tableView: UITableView!
@@ -35,6 +35,8 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var messages = [Message]()
     var db: Firestore!
     
+    var conversationRef: DocumentReference? = nil
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -48,18 +50,22 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         db = Firestore.firestore()
-        let uid = recipient!
+        //let uid = recipient!
         
         messageField.layer.cornerRadius = 8
         messageField.clipsToBounds = true
         
         title = recipientUserName
         
-        Auth.auth().addStateDidChangeListener { auth, user in
-            if let user = user{
-                self.loadData(currentUser: user.uid, recipient: uid)
-            }
-        }
+        currentUser = Auth.auth().currentUser?.uid  //gets current user uid
+        
+        //reference to the conversation with the recipient
+        conversationRef = db
+            .collection("Users").document(currentUser)
+            .collection("Conversations").document(recipient)
+        
+        loadData()
+        checkForUpdates()
         
         self.view.addConstraint(NSLayoutConstraint(item: textView, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: textView, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant: 48))
         
@@ -80,6 +86,47 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         //moves the view of the table to the bottom where the newest messages will be
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
             self.moveToBottom()
+        }
+    }
+    //Data from firebase will be fetched and will create instances of Message class
+    //Each Message will be stored in the 'message' array
+    func loadData() {
+        conversationRef!.getDocument {(document, error) in
+            if let document = document, document.exists {
+                let documentData = document.data()
+                let conversation = documentData?["Conversation"] as! NSArray
+                for message in conversation {
+                    let map = message as! [String:String]
+                    let sender = Array(map.keys)[0]
+                    let message = map[sender]
+                    self.messages.append(Message(message: message, sender: sender))
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+            
+        }
+    }
+    
+    func checkForUpdates() {
+        conversationRef?.addSnapshotListener {
+            docSnapShot, error in
+            
+            guard let snapshot = docSnapShot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            let documentData = snapshot.data()
+            let conversation = documentData?["Conversation"] as! NSArray
+            let recentMessage = conversation[conversation.count-1]
+            let map = recentMessage as! [String:String]
+            let sender = Array(map.keys)[0]
+            let message = map[sender]
+            self.messages.append(Message(message: message, sender: sender))
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -162,66 +209,6 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             return MessagesCell()
         }
     }
-
-    //Data from firebase will be fetched and will create instances of Message class
-    //Each Message will be stored in the 'message' array
-    func loadData(currentUser: String, recipient: String) {
-        self.currentUser = currentUser
-        self.recipient = recipient
-        Auth.auth().addStateDidChangeListener { auth, user in
-            if let user = user{
-                self.db.collection("Users").document(user.uid).collection("Conversations").document(recipient).getDocument {(document, error) in
-                    if let document = document, document.exists {
-                        let documentData = document.data()
-                        let conversation = documentData?["Conversation"] as! NSArray
-                        for message in conversation{
-                            let lastMap = message as! [String:String]
-                            let Sender = Array(lastMap.keys)[0]
-                            let lastMessage = lastMap[Sender] as! String
-                            self.messages.append(Message(message:lastMessage,sender: Sender))
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-                        }
-                    } else {
-                        // Create the new conversation
-                        // Should be called ONLY after creating a new conversation
-                        // Seems to not work appropriately, testing concurrency issues
-                        // Should only run after setting
-                        let emptyConversations = NSArray()
-                        print("Conversation from: \(self.currentUserName ?? "currentUserNameError") to: \(self.recipientUserName ?? "recipientUserNameError") does not exist, creating now")
-                        
-                        // Update Convesations attribute is User document
-                        self.db.collection("Users").document(user.uid).getDocument(completion: { (document, error) in
-                            if let document = document, document.exists {
-                                let documentData = document.data()
-                                let conversations = documentData?["Conversations"] as! NSMutableArray
-                                conversations.add(recipient)
-                                self.db.collection("Users").document(user.uid).updateData(["Conversations": conversations])
-                            }
-                        })
-                        self.db.collection("Users").document(recipient).getDocument(completion: { (document, error) in
-                            if let document = document, document.exists {
-                                let documentData = document.data()
-                                let conversations = documentData?["Conversations"] as! NSMutableArray
-                                conversations.add(user.uid)
-                                self.db.collection("Users").document(recipient).updateData(["Conversations": conversations])
-                            }
-                        })
-                        
-                        // Create the new conversation document in the Conversations collection
-                        self.db.collection("Users").document(user.uid).collection("Conversations").document(recipient).setData([
-                            "Conversation" : emptyConversations,
-                            "Name": self.recipientUserName])
-                        self.db.collection("Users").document(recipient).collection("Conversations").document(user.uid).setData([
-                            "Conversation" : emptyConversations,
-                            "Name": self.currentUserName])
-                    }
-                }
-            } else {
-            }
-        }
-    }
     
     //scrolls the view to the bottom
     func moveToBottom() {
@@ -234,34 +221,29 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     //action for pressing send button
     //will send snapshot of message to Firebase
     @IBAction func sendPressed(_ sender: AnyObject) {
-        dissKeyboard()
-        if (messageField.text != nil && messageField.text != "") {
-            Auth.auth().addStateDidChangeListener { auth, user in
-                if let user = user{
-                    self.db.collection("Users").document(user.uid).collection("Conversations").document(self.recipient).getDocument {(document, error) in
-                        if let document = document, document.exists {
-                            let documentData = document.data()
-                            let conversation = documentData?["Conversation"] as! NSMutableArray
-                            let textMessage = self.messageField.text
-                            let newMessage = [user.uid: textMessage]
-                            conversation.add(newMessage)
-                            self.db.collection("Users").document(user.uid).collection("Conversations").document(self.recipient).updateData(["Conversation" : conversation])
-                            self.db.collection("Users").document(self.recipient).collection("Conversations").document(user.uid).updateData(["Conversation" : conversation])
-                            self.messages.append(Message(message: textMessage!, sender: user.uid))
-                            self.messageField.text = ""
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-                        } else {
-                            print("Document does not exist")
-                        }
-                    }
-                } else {
-                }
-                
-            }
-            self.moveToBottom()
+        guard let message = messageField.text else {
+            print("There is no message")
+            return
         }
+        
+        conversationRef?.getDocument {(document, error) in
+            if let document = document, document.exists {
+                let documentData = document.data()
+                let conversation = documentData?["Conversation"] as! NSMutableArray
+                let newMessage = [self.currentUser:message]
+                conversation.add(newMessage)
+                
+                let recipientRef = self.db
+                    .collection("Users").document(self.recipient)
+                    .collection("Conversations").document(self.currentUser)
+                
+                self.messageField.text = ""
+                self.conversationRef?.updateData(["Conversation": conversation])
+                recipientRef.updateData(["Conversation": conversation])
+            }
+        }
+        dissKeyboard()
+        self.moveToBottom()
     }
     
     @objc func attemptMessageUnlock(){
@@ -301,3 +283,9 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         }
     }
 }
+
+
+
+    
+
+

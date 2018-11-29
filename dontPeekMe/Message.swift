@@ -7,22 +7,14 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
-class Message {
+struct Message {
+    var message: String
+    var sender: String
     
-    private var _message: String!
-    private var _sender: String!
-    
-    var message: String {
-        return _message
-    }
-    
-    var sender: String {
-        return _sender
-    }
-    
-    init(message: String, sender: String) {
-        _message = message
-        _sender = sender
+    init(message: String!, sender: String!) {
+        self.message = message
+        self.sender = sender
     }
 }

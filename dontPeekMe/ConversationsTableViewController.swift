@@ -47,15 +47,15 @@ class ConversationsTableViewController: UITableViewController {
                 self.signOut()
             }
         }
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleSignOut))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewConversation))
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         roundButton.addTarget(self, action: #selector(attemptMessageUnlock), for: UIControl.Event.touchUpInside)
@@ -104,17 +104,17 @@ class ConversationsTableViewController: UITableViewController {
         present(alertController, animated: true, completion: nil)
     }
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return conversationNames.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell", for: indexPath) as! CustomTableViewCell
         
@@ -127,12 +127,17 @@ class ConversationsTableViewController: UITableViewController {
                     if let document = document, document.exists {
                         let documentData = document.data()
                         let conversation = documentData?["Conversation"] as! NSArray
-                        let lastMap = conversation.lastObject as! [String:String]
-                        let lastMessage = lastMap[Array(lastMap.keys)[0]] as! String
-                        cell.messageLabel.text = lastMessage
-                        let name = documentData?["Name"] as! String
-                        cell.nameLabel.text = name
-                        cell.thumbnailImageView.setImageForName(name, backgroundColor: nil, circular: true, textAttributes: nil, gradient: true)                    } else {
+                        //right now whenever we sign in our out we create empty conversations with no body
+                        //The following code will crash the program as it is a null pointer exception
+                        if conversation.count > 0 {
+                            let lastMap = conversation.lastObject as! [String:String]
+                            let lastMessage = lastMap[Array(lastMap.keys)[0]] as! String
+                            cell.messageLabel.text = lastMessage
+                            let name = documentData?["Name"] as! String
+                            cell.nameLabel.text = name
+                            cell.thumbnailImageView.setImageForName(name, backgroundColor: nil, circular: true, textAttributes: nil, gradient: true)
+                        }
+                    } else {
                         print("Document does not exist")
                     }
                 }
@@ -140,7 +145,7 @@ class ConversationsTableViewController: UITableViewController {
                 self.signOut()
             }
         }
-
+        
         if isBlurred{
             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
             let blurView = UIVisualEffectView(effect: blurEffect)
@@ -154,7 +159,7 @@ class ConversationsTableViewController: UITableViewController {
                 viewWithTag.removeFromSuperview()
             }
         }
-
+        
         return cell
     }
     
@@ -166,10 +171,10 @@ class ConversationsTableViewController: UITableViewController {
     /**
      Prepares for cell selection, passes recipient UID
      - Parameter segue: The segue object containing information about
-                 the view controllers involved in the segue.
+     the view controllers involved in the segue.
      - Parameter sender: The object that initiated the segue. You might
-                 use this parameter to perform different actions based
-                 on which control (or other object) initiated the segue.
+     use this parameter to perform different actions based
+     on which control (or other object) initiated the segue.
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showMessages"){
@@ -179,7 +184,7 @@ class ConversationsTableViewController: UITableViewController {
             messageVC.recipientUserName = self.recipientUserName
         }
     }
-
+    
     @objc func attemptMessageUnlock(){
         let localAuthenticationContext = LAContext()
         localAuthenticationContext.localizedFallbackTitle = "Use Passcode"
