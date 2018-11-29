@@ -25,6 +25,8 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var recipient: String!
     var recipientUserName: String!
     
+    var textBottomConstraint: NSLayoutConstraint?
+    
     private var roundButton = UIButton()
     //private let concurrentDispatchQueue = DispatchQueue(label: "dontPeekMe.recipientNameQueue", attributes: .concurrent)
     var isBlurred = true
@@ -54,6 +56,12 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 self.loadData(currentUser: user.uid, recipient: uid)
             }
         }
+        
+        self.view.addConstraint(NSLayoutConstraint(item: textView, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: textView, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant: 48))
+        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -48))
+        
+        textBottomConstraint = NSLayoutConstraint(item: textView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        self.view.addConstraint(textBottomConstraint!)
         //use this when we segue currentUser and recipient data from conversationController
 //        if currentUser != "" && currentUser != nil && recipient != "" && recipient != nil {
 //            loadData(currentUser: currentUser, recipient: recipient)
@@ -76,22 +84,38 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     //shows the keyboard
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRect = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRect.height
-            self.textView.frame.origin.y -= keyboardHeight
+            textBottomConstraint?.constant = -keyboardHeight
             self.roundButton.frame.origin.y -= keyboardHeight
+            
+            UIView.animate(withDuration: 0, animations: {
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                let indexPath = NSIndexPath(item: self.messages.count - 1, section: 0)
+                self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+            }
+            
             print(keyboardHeight)
         }
     }
     
     //hides the keyboard
     @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRect = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRect.height
-            self.textView.frame.origin.y += keyboardHeight
+            textBottomConstraint?.constant = 0
             self.roundButton.frame.origin.y += keyboardHeight
+            
+            UIView.animate(withDuration: 0, animations: {
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                let indexPath = NSIndexPath(item: self.messages.count - 1, section: 0)
+                self.tableView.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+            }
+            
             print(keyboardHeight)
         }
     }
