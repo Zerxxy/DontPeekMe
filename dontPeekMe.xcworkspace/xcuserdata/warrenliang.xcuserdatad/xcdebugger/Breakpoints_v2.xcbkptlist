@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "dontPeekMe/MessageVC.swift"
-            timestampString = "565179226.8614399"
+            timestampString = "565183047.6635799"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "loadData(currentUser:recipient:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -15,7 +15,7 @@ import LocalAuthentication
 class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet weak var messageField: UITextField!
+    @IBOutlet weak var messageField: UITextView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textView: UIView!
     
@@ -26,6 +26,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var recipientUserName: String!
     
     var textBottomConstraint: NSLayoutConstraint?
+    var tableBottomConstraint: NSLayoutConstraint?
     
     private var roundButton = UIButton()
     //private let concurrentDispatchQueue = DispatchQueue(label: "dontPeekMe.recipientNameQueue", attributes: .concurrent)
@@ -49,6 +50,9 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         db = Firestore.firestore()
         let uid = recipient!
         
+        messageField.layer.cornerRadius = 8
+        messageField.clipsToBounds = true
+        
         title = recipientUserName
         
         Auth.auth().addStateDidChangeListener { auth, user in
@@ -58,15 +62,12 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         }
         
         self.view.addConstraint(NSLayoutConstraint(item: textView, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: textView, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant: 48))
-        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -48))
         
         textBottomConstraint = NSLayoutConstraint(item: textView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
         self.view.addConstraint(textBottomConstraint!)
-        //use this when we segue currentUser and recipient data from conversationController
-//        if currentUser != "" && currentUser != nil && recipient != "" && recipient != nil {
-//            loadData(currentUser: currentUser, recipient: recipient)
-//        }
-        //loadData(currentUser: "Warren", recipient: "Bob")
+        
+        tableBottomConstraint = NSLayoutConstraint(item: tableView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: textView, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 0)
+        self.view.addConstraint(tableBottomConstraint!)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -136,7 +137,6 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         if roundButton.superview != nil {
             DispatchQueue.main.async {
                 self.roundButton.removeFromSuperview()
-                //self.roundButton = nil
             }
         }
         dismiss(animated: true, completion: nil)
@@ -227,7 +227,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func moveToBottom() {
         if messages.count > 0 {
             let indexPath = IndexPath(row: messages.count - 1, section: 0)
-            tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
     
@@ -258,7 +258,9 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                     }
                 } else {
                 }
+                
             }
+            self.moveToBottom()
         }
     }
     

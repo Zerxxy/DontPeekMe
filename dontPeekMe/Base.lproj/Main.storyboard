@@ -163,15 +163,8 @@
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G0f-Ka-wLd">
                                 <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5T0-NJ-7sJ">
-                                        <rect key="frame" x="8" y="5" width="315" height="30"/>
-                                        <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="1"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsN-Pm-WsV">
-                                        <rect key="frame" x="331" y="5" width="36" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsN-Pm-WsV">
+                                        <rect key="frame" x="331" y="5" width="36" height="33"/>
                                         <state key="normal" title="Send">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -179,15 +172,22 @@
                                             <action selector="sendPressed:" destination="iFb-ZH-bBL" eventType="touchUpInside" id="Raw-6Q-wWa"/>
                                         </connections>
                                     </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="e8B-eg-z94">
+                                        <rect key="frame" x="8" y="5" width="304" height="33"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.13468170166015625" green="0.32944715023040771" blue="0.61179548501968384" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="5T0-NJ-7sJ" secondAttribute="bottom" constant="5" id="7yB-mS-YuT"/>
+                                    <constraint firstItem="e8B-eg-z94" firstAttribute="leading" secondItem="G0f-Ka-wLd" secondAttribute="leading" constant="5" id="15A-Qd-Dra"/>
+                                    <constraint firstItem="e8B-eg-z94" firstAttribute="top" secondItem="G0f-Ka-wLd" secondAttribute="top" constant="5" id="Eek-VD-iX2"/>
                                     <constraint firstAttribute="bottom" secondItem="wsN-Pm-WsV" secondAttribute="bottom" constant="5" id="Fsg-3h-Z2J"/>
-                                    <constraint firstItem="5T0-NJ-7sJ" firstAttribute="top" secondItem="G0f-Ka-wLd" secondAttribute="top" constant="5" id="N3j-J4-bvH"/>
+                                    <constraint firstItem="wsN-Pm-WsV" firstAttribute="centerY" secondItem="G0f-Ka-wLd" secondAttribute="centerY" id="VgB-mw-qZg"/>
                                     <constraint firstAttribute="trailing" secondItem="wsN-Pm-WsV" secondAttribute="trailing" constant="8" id="c7F-CD-LOj"/>
-                                    <constraint firstItem="5T0-NJ-7sJ" firstAttribute="leading" secondItem="G0f-Ka-wLd" secondAttribute="leading" constant="8" id="dq9-ci-qS7"/>
-                                    <constraint firstItem="wsN-Pm-WsV" firstAttribute="leading" secondItem="5T0-NJ-7sJ" secondAttribute="trailing" constant="8" id="tLr-kI-ZKt"/>
+                                    <constraint firstAttribute="bottom" secondItem="e8B-eg-z94" secondAttribute="bottom" constant="5" id="cbU-G1-AGb"/>
+                                    <constraint firstItem="wsN-Pm-WsV" firstAttribute="leading" secondItem="e8B-eg-z94" secondAttribute="trailing" constant="8" id="qfM-CM-zdC"/>
                                     <constraint firstItem="wsN-Pm-WsV" firstAttribute="top" secondItem="G0f-Ka-wLd" secondAttribute="top" constant="5" id="wXW-gs-SbA"/>
                                 </constraints>
                             </view>
@@ -203,7 +203,7 @@
                         <viewLayoutGuide key="safeArea" id="ppu-5M-mJ2"/>
                     </view>
                     <connections>
-                        <outlet property="messageField" destination="5T0-NJ-7sJ" id="qR2-x8-yud"/>
+                        <outlet property="messageField" destination="e8B-eg-z94" id="4bg-PL-4V7"/>
                         <outlet property="sendButton" destination="wsN-Pm-WsV" id="bBZ-gt-Igk"/>
                         <outlet property="tableView" destination="4Io-hP-srS" id="UgN-Ya-iQ6"/>
                         <outlet property="textView" destination="G0f-Ka-wLd" id="IEC-hW-CfM"/>
