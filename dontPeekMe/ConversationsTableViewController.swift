@@ -50,12 +50,38 @@ class ConversationsTableViewController: UITableViewController {
             }
         }
         
+        checkForUpdates()
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(handleSignOut))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewConversation))
+    }
+    
+    func checkForUpdates() {
+        self.db.collection("Users").document(Auth.auth().currentUser!.uid).collection("Conversations")
+            .addSnapshotListener {
+                querySnapshot, error in
+                
+                guard let snapshot = querySnapshot else {
+                    print("Error in collection: \(error)")
+                    return
+                }
+                
+                snapshot.documentChanges.forEach {
+                    diff in
+                    
+                    if diff.type == .added {
+                        self.conversationNames.append((diff.document.data()["Name"] as? String)!) //either this
+                        print("The above prints this" + diff.document.documentID) //or that
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
