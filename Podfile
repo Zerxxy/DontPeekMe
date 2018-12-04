@@ -12,14 +12,14 @@ target 'dontPeekMe' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
 
-  target 'dontPeekMeTests' do
-    inherit! :search_paths
-    # Pods for testing
+  target 'dontPeekMeUnitTests' do
+  	inherit! :search_paths
+  	pod 'Firebase'
   end
-
-  target 'dontPeekMeUITests' do
-    inherit! :search_paths
-    # Pods for testing
+  
+  target 'dontPeekMeFirebaseTests' do
+	inherit! :search_paths
+	pod 'Firebase'
   end
 
 end

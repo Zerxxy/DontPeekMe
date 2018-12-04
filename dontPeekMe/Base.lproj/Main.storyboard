@@ -364,7 +364,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGY-I6-Ho8">
                                 <rect key="frame" x="36" y="489" width="303" height="36"/>
                                 <color key="backgroundColor" red="0.82098287339999998" green="0.63072061540000002" blue="0.19670891760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <accessibility key="accessibilityConfiguration" identifier="loginButton"/>
+                                <accessibility key="accessibilityConfiguration" identifier="registerButton"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="17"/>
                                 <state key="normal" title="Register">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -463,7 +463,7 @@
                     <connections>
                         <outlet property="fullNameField" destination="vAW-Gl-gyN" id="IeF-Xu-dEj"/>
                         <outlet property="phoneNumberField" destination="hHo-IH-SL4" id="IgO-cl-0jV"/>
-                        <outlet property="registerButton" destination="wGY-I6-Ho8" id="p8s-Yh-Txw"/>
+                        <outlet property="registerButton" destination="wGY-I6-Ho8" id="xqq-JM-u3f"/>
                         <outlet property="registerPasswordField" destination="Ofi-Dd-w9W" id="7l7-Mo-5Ia"/>
                         <outlet property="registerUsernameField" destination="xNl-Og-NRY" id="dmH-un-rQE"/>
                         <outlet property="repeatedPasswordField" destination="bXP-13-sIE" id="f7m-dZ-pqH"/>

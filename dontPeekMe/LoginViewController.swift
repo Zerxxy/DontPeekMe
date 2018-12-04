@@ -24,6 +24,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(view.accessibilityIdentifier)
         // Set the background color and login button color
         let bgTopColor = UIColor(red: 0, green: 85/255, blue: 162/255, alpha: 0.75)
         let bgBottomColor = UIColor(red: 0, green: 85/255, blue: 162/255, alpha: 1.0)

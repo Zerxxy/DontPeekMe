@@ -24,6 +24,7 @@ class ConversationsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.accessibilityIdentifier = "conversationsTableView"
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.layoutMargins = UIEdgeInsets.zero
         let settings = FirestoreSettings()

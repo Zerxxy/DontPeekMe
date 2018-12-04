@@ -13,11 +13,14 @@ class dontPeekMeFinalTests: XCTestCase {
     var MessageVCTest: MessageVC!
     var ConversationsTableTest: ConversationsTableViewController!
     var LoginViewTest: LoginViewController!
+    var UserTest: User!
     override func setUp() {
+        super.setUp()
         LoginViewTest = LoginViewController()
         MessageVCTest = MessageVC()
         AuthorizationTest = Authorization()
         ConversationsTableTest = ConversationsTableViewController()
+        UserTest = User(userName: "testName", email: "testEmail", phoneNumber: "123", uid: "0123")
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -26,6 +29,8 @@ class dontPeekMeFinalTests: XCTestCase {
         MessageVCTest = nil
         ConversationsTableTest = nil
         LoginViewTest = nil
+        UserTest = nil
+        super.tearDown()
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
@@ -174,5 +179,13 @@ class dontPeekMeFinalTests: XCTestCase {
         
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }}
+    }
+    
+    func testNewUser() {
+        XCTAssert(UserTest.userName == "testName")
+        XCTAssert(UserTest.email == "testEmail")
+        XCTAssert(UserTest.phoneNumber == "123")
+        XCTAssert(UserTest.uid == "0123")
+    }
+}
 

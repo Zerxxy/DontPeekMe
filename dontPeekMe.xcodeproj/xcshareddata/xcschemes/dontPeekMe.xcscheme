@@ -48,6 +48,26 @@
                ReferencedContainer = "container:dontPeekMe.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "28B1E7EF21B0CA3600D79A5D"
+               BuildableName = "dontPeekMeUnitTests.xctest"
+               BlueprintName = "dontPeekMeUnitTests"
+               ReferencedContainer = "container:dontPeekMe.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2870088121B4FC6300F27849"
+               BuildableName = "dontPeekMeFirebaseTests.xctest"
+               BlueprintName = "dontPeekMeFirebaseTests"
+               ReferencedContainer = "container:dontPeekMe.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
