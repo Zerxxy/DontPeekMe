@@ -10,7 +10,7 @@
 
 import UIKit
 import FirebaseAuth
-
+import Crashlytics
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var usernameField: UITextField!
@@ -79,8 +79,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func forgotPassword(_ sender: Any) {
-        let alertController = UIAlertController(title: "Forgot Password", message: "Incomplete function, will implement later", preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        present(alertController, animated: true, completion: nil)
+        Crashlytics.sharedInstance().crash()
+        //let alertController = UIAlertController(title: "Forgot Password", message: "Incomplete function, will implement later", preferredStyle: UIAlertController.Style.alert)
+        //alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        //present(alertController, animated: true, completion: nil)
     }
 }

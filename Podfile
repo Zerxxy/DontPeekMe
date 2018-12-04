@@ -11,15 +11,17 @@ target 'dontPeekMe' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
-
-  target 'dontPeekMeUnitTests' do
-  	inherit! :search_paths
-  	pod 'Firebase'
-  end
+  pod 'Fabric', '~> 1.8.2'
+  pod 'Crashlytics', '~>3.11.1'
+  pod 'Firebase/Performance'
   
+  target 'dontPeekMeUnitTests' do
+      inherit! :search_paths
+      pod 'Firebase'
+    end
   target 'dontPeekMeFirebaseTests' do
-	inherit! :search_paths
-	pod 'Firebase'
-  end
+      inherit! :search_paths
+      pod 'Firebase'
+    end
 
 end
