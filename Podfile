@@ -16,5 +16,13 @@ target 'dontPeekMe' do
   pod 'Crashlytics', '~>3.11.1'
   pod 'Firebase/Performance'
   
+  target 'dontPeekMeUnitTests' do
+      inherit! :search_paths
+      pod 'Firebase'
+  end
+  target 'dontPeekMeFirebaseTests' do
+      inherit! :search_paths
+      pod 'Firebase'
+  end   
 
 end
