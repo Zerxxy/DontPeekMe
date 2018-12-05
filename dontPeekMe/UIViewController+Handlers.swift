@@ -23,7 +23,7 @@ extension UIViewController{
         self.view.endEditing(true)
     }
     
-    func setFloatingButton(roundButton: UIButton){
+    func setFloatingButton(roundButton: UIButton, bottomConstraint: NSLayoutConstraint){
         let buttonColor = UIColor(red: 229/255, green: 168/255, blue: 35/255, alpha: 1.0)
         roundButton.translatesAutoresizingMaskIntoConstraints = false
         roundButton.backgroundColor = buttonColor
@@ -34,7 +34,7 @@ extension UIViewController{
                 keyWindow.addSubview(roundButton)
                 NSLayoutConstraint.activate([
                     keyWindow.trailingAnchor.constraint(equalTo: roundButton.trailingAnchor, constant: 20),
-                    keyWindow.bottomAnchor.constraint(equalTo: roundButton.bottomAnchor, constant: 60),
+                    bottomConstraint,
                     roundButton.widthAnchor.constraint(equalToConstant: 50),
                     roundButton.heightAnchor.constraint(equalToConstant: 50)])
             }

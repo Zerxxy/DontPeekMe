@@ -19,10 +19,6 @@ target 'dontPeekMe' do
   target 'dontPeekMeUnitTests' do
       inherit! :search_paths
       pod 'Firebase'
-  end
-  target 'dontPeekMeFirebaseTests' do
-      inherit! :search_paths
-      pod 'Firebase'
   end   
 
 end

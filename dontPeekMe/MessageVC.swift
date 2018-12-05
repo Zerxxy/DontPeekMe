@@ -148,7 +148,6 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             let keyboardRect = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRect.height
             textBottomConstraint?.constant = -keyboardHeight
-            self.roundButton.frame.origin.y -= keyboardHeight
             
             UIView.animate(withDuration: 0, animations: {
                 self.view.layoutIfNeeded()
@@ -169,7 +168,6 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             let keyboardRect = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRect.height
             textBottomConstraint?.constant = 0
-            self.roundButton.frame.origin.y += keyboardHeight
             
             UIView.animate(withDuration: 0, animations: {
                 self.view.layoutIfNeeded()
@@ -191,7 +189,8 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         roundButton.addTarget(self, action: #selector(attemptMessageUnlock), for: UIControl.Event.touchUpInside)
-        setFloatingButton(roundButton: roundButton)
+        let bottomButtonConstraint = NSLayoutConstraint(item: textView, attribute: .top, relatedBy: .equal, toItem: roundButton, attribute: .bottom, multiplier: 1, constant: 60 - textView.bounds.height)
+        setFloatingButton(roundButton: roundButton, bottomConstraint: bottomButtonConstraint)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -237,7 +236,7 @@ class MessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     //action for pressing send button
     //will send snapshot of message to Firebase
     @IBAction func sendPressed(_ sender: AnyObject) {
-        guard let message = messageField.text else {
+        guard let message = messageField.text, !message.isEmpty else {
             print("There is no message")
             return
         }

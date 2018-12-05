@@ -62,7 +62,8 @@ class ConversationsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         roundButton.addTarget(self, action: #selector(attemptMessageUnlock), for: UIControl.Event.touchUpInside)
-        setFloatingButton(roundButton: roundButton)
+        let buttonBottomConstraint = NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: roundButton, attribute: .bottom, multiplier: 1, constant: 60)
+        setFloatingButton(roundButton: roundButton, bottomConstraint: buttonBottomConstraint)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
